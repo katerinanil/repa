@@ -1,5 +1,6 @@
 import shelve
 import config
+from stem import stemmer
 
 def getWords(path):
     """
@@ -40,15 +41,15 @@ def makeDB(files):
     db = shelve.open(config.DATABASE_NAME, writeback = True) 
     for f in files:        
         for word, left, right in getWords(f):
-            for st in stemmer(word.lower())        
+            for st in stemmer(word.lower()):
                 s = db.setdefault(st, {})
                 l = s.setdefault(f, [])
                 l.append((left, right))
-                db[word] = st
+                db[st] = s
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['small_text_1.txt'])
+    makeDB(['mid_text_1.txt'])
     #makeDB(['ViM Part 4.txt'])
     #makeDB(['ViM Part 3.txt'])
     #makeDB(['ViM Part 4.txt'])
