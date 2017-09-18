@@ -1,7 +1,5 @@
-# import sys
 import shelve
 import config
-from stem import stemmer
 
 def getWords(path):
     """
@@ -34,16 +32,13 @@ def getWords(path):
     #print(lst)
 
 
-def makeDB(files, db=config.DATABASE_NAME):
+def makeDB(files):
     """
-    Функция в качестве аргумента принимает список из путей (+ имя файла) и создаёт базу данных
+    Функция в качестве аргумента принимает список из путей и создаёт базу данных
     вида: {'слово': {'путь к файлу': [(индекс начала, индекс конца слова)]}}
     """
-    #пробежаться по всем основам для слова
-    #и для кажого сделать свой словарь
-    #и потом его обновлять
-    db = shelve.open(db, writeback=True) 
-    for f in files:
+    db = shelve.open(config.DATABASE_NAME, writeback = True) 
+    for f in files:        
         for word, left, right in getWords(f):
             word = word.lower()        
             s = db.setdefault(word, {})
@@ -53,5 +48,7 @@ def makeDB(files, db=config.DATABASE_NAME):
     db.close()
 
 if __name__ == '__main__':
-    # makeDB(sys.argv[1:])
     makeDB(['small_text_1.txt'])
+    #makeDB(['ViM Part 4.txt'])
+    #makeDB(['ViM Part 3.txt'])
+    #makeDB(['ViM Part 4.txt'])
