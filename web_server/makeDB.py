@@ -45,11 +45,11 @@ def makeDB(files, db=config.DATABASE_NAME):
     db = shelve.open(db, writeback=True) 
     for f in files:
         for word, left, right in getWords(f):
-            word = word.lower()        
-            s = db.setdefault(word, {})
-            l = s.setdefault(f, [])
-            l.append((left, right))
-            db[word] = s
+            for st in stemmer(word.lower())        
+                s = db.setdefault(st, {})
+                l = s.setdefault(f, [])
+                l.append((left, right))
+                db[word] = st
     db.close()
 
 if __name__ == '__main__':
