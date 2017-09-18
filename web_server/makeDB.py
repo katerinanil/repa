@@ -1,3 +1,4 @@
+# import sys
 import shelve
 import config
 from stem import stemmer
@@ -44,19 +45,13 @@ def makeDB(files, db=config.DATABASE_NAME):
     db = shelve.open(db, writeback=True) 
     for f in files:
         for word, left, right in getWords(f):
-            for st in stemmer(word.lower())        
-                s = db.setdefault(st, {})
-                l = s.setdefault(f, [])
-                l.append((left, right))
-                db[word] = s
+            word = word.lower()        
+            s = db.setdefault(word, {})
+            l = s.setdefault(f, [])
+            l.append((left, right))
+            db[word] = s
     db.close()
 
 if __name__ == '__main__':
-    # makeDB(['ViM P1.txt'])
-    # makeDB(['ViM P2.txt'])
-    # makeDB(['ViM P3.txt'])
-    # makeDB(['ViM P4.txt'])
-    # makeDB(['1.txt'])
-    # makeDB(['2.txt'])
-    makeDB(['rus1.txt'])
-    makeDB(['rus2.txt'])
+    # makeDB(sys.argv[1:])
+    makeDB(['small_text_1.txt'])
