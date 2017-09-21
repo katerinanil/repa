@@ -1,9 +1,9 @@
-import before_stem
+from flex_arr import flexion_arr, getMaxLen
 
 def stemmer(query):
         """"функция перебирает псевдофлексии слова запроса и, как только находит одну из них
     в словаре(?), возвращает по ней псевдооснову. таким образом предполагается флексия максимальной длины"""
-    for i in range(3, 0, -1):
+    for i in range(getMaxLen(), 0, -1):
         if len(query) > i and query[len(query) - i:] in flexion_arr:
             return query[:len(query) - i]
     return query

@@ -14,26 +14,28 @@ class getDBTests(unittest.TestCase):
         f2.write('мыла раму')
         f2.close()
 
-        makeDB.makeDB(['f1.txt', 'f2.txt'], "testdb")
-        print("DB was made")
-        ass = "[('м[18 chars]0, 4)]}), ('мама', {'f1.txt': [(0, 4)]}), ('мы[147 chars]]})]"
-        res = shelve.open("testdb")
-        res = str(sorted(res.items()))
-        self.assertEqual(ass, result)
-        res.close()
+        db_name = "testdb"
+        makeDB.makeDB(['f1.txt', 'f2.txt'], db_name)
+        ass = "[('мам', {'f1.txt': [(0, 4)]}), ('мама', {'f1.txt': [(0, 4)]}), " + \
+              "('мы', {'f2.txt': [(0, 4)]}), ('мыл', {'f2.txt': [(0, 4)]}), " + \
+              "('мыла', {'f2.txt': [(0, 4)]}), ('рам', {'f2.txt': [(5, 9)]}), " + \
+              "('раму', {'f2.txt': [(5, 9)]})]"
+        db = shelve.open(db_name)
+        res = str(sorted(db.items()))
+        db.close()
        
         os.unlink('f1.txt')
         os.unlink('f2.txt')
         if os.path.exists('testdb'):
-                os.unlink('testdb')
+            os.unlink('testdb')
         if os.path.exists('testdb.dat'):
-                os.unlink('testdb.dat')
+            os.unlink('testdb.dat')
         if os.path.exists('testdb.bak'):
-                os.unlink('testdb.bak')
+            os.unlink('testdb.bak')
         if os.path.exists('testdb.dir'):
-                os.unlink('testdb.dir')
+            os.unlink('testdb.dir')
+        self.assertEqual(ass, res)
                 
 if __name__ == '__main__':
     unittest.main()
-
-#dict.get(key[, default])
+#{'слово': {'путь к файлу': [(индекс начала, индекс конца слова)]}}#
