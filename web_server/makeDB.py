@@ -33,12 +33,12 @@ def getWords(path):
     #print(lst)
 
 
-def makeDB(files):
+def makeDB(files, dbname):
     """
     Функция в качестве аргумента принимает список из путей и создаёт базу данных
     вида: {'слово': {'путь к файлу': [(индекс начала, индекс конца слова)]}}
     """
-    db = shelve.open(config.DATABASE_NAME, writeback = True) 
+    db = shelve.open(dbname, writeback = True) 
     for f in files:        
         for word, left, right in getWords(f):
             for st in stemmer(word.lower()):
@@ -49,7 +49,8 @@ def makeDB(files):
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt'])
+    makeDB(['mid_text_1.txt'], "mydb")
+#mydb.print()
     #makeDB(['ViM Part 4.txt'])
     #makeDB(['ViM Part 3.txt'])
     #makeDB(['ViM Part 4.txt'])
