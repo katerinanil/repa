@@ -12,6 +12,7 @@ def getalltokens(query):
 		elif w.isdigit(): yield Token(w, 'digit')
 		else: yield Token(w, 'other')
 
+#сделать тут преобразование query через стеммер
 def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Множества пересечений имен файлов для каждого токена
 	number_of_quotes = []
@@ -83,6 +84,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	database.close()
 	return res
 
+#избавиться от дубликатов контекстов
 def makeContexts(d):
 	res = OrderedDict()
 	for path in d:

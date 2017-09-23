@@ -49,8 +49,8 @@ def makeDB(files, dbname):
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt'], "mydb")
-    makeDB(['mid_text_2.txt'], "mydb")
+    makeDB(['mid_text_1.txt'], 'mydb')
+    makeDB(['mid_text_2.txt'], 'mydb')
 #mydb.print()
     #makeDB(['ViM Part 4.txt'])
     #makeDB(['ViM Part 3.txt'])
