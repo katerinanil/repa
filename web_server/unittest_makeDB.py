@@ -23,7 +23,8 @@ class getDBTests(unittest.TestCase):
         db = shelve.open(db_name)
         res = str(sorted(db.items()))
         db.close()
-       
+        self.assertEqual(ass, res)
+        
         os.unlink('f1.txt')
         os.unlink('f2.txt')
         if os.path.exists('testdb'):
@@ -34,8 +35,8 @@ class getDBTests(unittest.TestCase):
             os.unlink('testdb.bak')
         if os.path.exists('testdb.dir'):
             os.unlink('testdb.dir')
-        self.assertEqual(ass, res)
+        #self.assertEqual(ass, res)
                 
 if __name__ == '__main__':
     unittest.main()
-#{'слово': {'путь к файлу': [(индекс начала, индекс конца слова)]}}#
+#{'слово': {'путь к файлу': [(индекс начала, индекс конца слова)]}}

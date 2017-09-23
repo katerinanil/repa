@@ -1,4 +1,4 @@
-from functools import reduce
+#from functools import reduce
 
 flexion_arr = {'а', 'ам', 'ами', 'ас', 'ах', 'ая', 'е', 'её', 'ей', 'ем', 'ла', 
                'еми', 'емя', 'ex', 'ею', 'ёт', 'ёте', 'ёх', 'ёшь', 'и', 'ие',  
@@ -7,6 +7,7 @@ flexion_arr = {'а', 'ам', 'ами', 'ас', 'ах', 'ая', 'е', 'её', 'е
                'ую', 'шь', 'ать', 'ять', 'еть', 'уть', 'у', 'ю', 'ем', 'ешь', 'ете', 'ет',
                'ут', 'ют', 'ал', 'ял', 'ала', 'яла', 'али', 'яли', 'ул', 'ула', 'ули'}
 def getMaxLen():
+  """функция возвращает максимальную длину флексии в flexion_arr, если он не пустой"""
   if not len(flexion_arr): return 0
   maxlen = next(iter(flexion_arr))
   for flex in flexion_arr:
@@ -14,5 +15,7 @@ def getMaxLen():
           maxlen = flex
   return len(maxlen)
 
-def getMaxLen():
-  return len(reduce(lambda acc, next: acc if len(acc) > len(next) else next, flexion_arr))
+max_len = getMaxLen()
+
+#def getMaxLen2():
+#return len(reduce(lambda acc, next: acc if len(acc) > len(next) else next, fl_ar))
