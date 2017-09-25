@@ -1,1 +1,1 @@
-DATABASE_NAME = 'db'
+DATABASE_NAME = 'mydb'

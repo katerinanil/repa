@@ -1,4 +1,4 @@
-from flex_arr import stem_arr, flexion_arr
+from stem_flex_arr import stem_arr, flexion_arr
 
 def getMaxLen(arr):
   """функция возвращает максимальную длину флексии в flexion_arr, если он не пустой"""

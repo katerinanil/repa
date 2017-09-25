@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import shelve
+from stem_2 import stemmer
 
 class Token:
 	def __init__(self, str, type):
@@ -8,11 +9,11 @@ class Token:
 
 def getalltokens(query):
 	for w in filter(bool, query.split()):
-		if w.isalpha(): yield Token(w, 'alpha')
-		elif w.isdigit(): yield Token(w, 'digit')
-		else: yield Token(w, 'other')
+		for st in stemmer(w):
+			if st.isalpha(): yield Token(st, 'alpha')
+			elif st.isdigit(): yield Token(st, 'digit')
+			else: yield Token(st, 'other')
 
-#сделать тут преобразование query через стеммер
 def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Множества пересечений имен файлов для каждого токена
 	number_of_quotes = []
@@ -24,6 +25,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	first_token = True
 	for i in getalltokens(query):
 		#Проверяем, содержится ли токен в db
+		# print('IST', i.string)
 		if i.string in database:
 			if i.token_type == 'alpha' or i.token_type == 'digit':
 				#Создаем мн-во имен файлов, в которых найден токен
@@ -110,7 +112,8 @@ def makeContexts(d):
 			contexts = res.setdefault(path, [])
 			#Объединяем контексты
 			context = text[new_st:new_end]
-			contexts.append(context)
+			if not context in contexts:
+				contexts.append(context)
 		#Исключаем повторение контекстов для нескольких слов в запросе
 		exLst = []
 		exSet = set()
