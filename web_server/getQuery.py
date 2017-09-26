@@ -13,6 +13,7 @@ def getalltokens(query):
 			if st.isalpha(): yield Token(st, 'alpha')
 			elif st.isdigit(): yield Token(st, 'digit')
 			else: yield Token(st, 'other')
+			#st = '<b>' + st + '</b>'
 
 def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Множества пересечений имен файлов для каждого токена
@@ -122,6 +123,7 @@ def makeContexts(d):
 				exLst.append(el)
 				exSet.add(el)
 		res[path] = exLst
+	#print("муааа", list(res))
 	return res
 
 if __name__ == '__main__':

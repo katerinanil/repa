@@ -1,6 +1,6 @@
 import shelve
 import config
-from stem_1 import stemmer
+from stem_2 import stemmer
 
 def getWords(path):
     """
@@ -49,8 +49,8 @@ def makeDB(files, dbname):
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt'], config.DATABASE_NAME)
-    makeDB(['mid_text_2.txt'], config.DATABASE_NAME)
+    makeDB(['mid_text_1.txt'], 'mydb')
+    makeDB(['mid_text_2.txt'], 'mydb')
 #mydb.print()
     #makeDB(['ViM Part 4.txt'])
     #makeDB(['ViM Part 3.txt'])

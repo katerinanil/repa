@@ -98,12 +98,13 @@ class myHandler(BaseHTTPRequestHandler):
             myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
                 myHandler.QUTES_COUNTS.append((None, None))
-                result_line += r'<li>' + '<b>' + path + '</b>' + r'<ul>'
+                result_line += r'<li>'  + path  + r'<ul>'
                 for context in resDict[path]:
                     result_line += r'<li>'
-                    context = ' ' + context + ' '
+                    context = ' ' + context + '.'
                     #выделяем inputWords жирным посредством регулярного выражения
                     for w in filter(bool, inputWords.split()):
+                    #for w in  "".join(resDict.keys()):
                         context = re.sub('(\W)(' + w + ')(\W)', \
                             '\g<1><b>' + '\g<2>' + '</b>\g<3>', \
                             context, flags=re.I)
