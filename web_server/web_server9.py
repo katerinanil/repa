@@ -99,16 +99,21 @@ class myHandler(BaseHTTPRequestHandler):
             for i, path in enumerate(resDict):
                 myHandler.QUTES_COUNTS.append((None, None))
                 result_line += r'<li>'  + path  + r'<ul>'
-                for context in resDict[path]:
+                tup = resDict[path]
+                for context, positions in zip(tup[0], tup[1]):
                     result_line += r'<li>'
-                    context = ' ' + context + '.'
-                    #выделяем inputWords жирным посредством регулярного выражения
-                    for w in filter(bool, inputWords.split()):
-                    #for w in  "".join(resDict.keys()):
-                        context = re.sub('(\W)(' + w + ')(\W)', \
-                            '\g<1><b>' + '\g<2>' + '</b>\g<3>', \
-                            context, flags=re.I)
-                    result_line += context[1:-1]
+                    result_line += context[:positions[0][0]]
+                    for i in range(len(positions)-1):
+                        pos = positions[i]
+                        result_line += '<b>'
+                        result_line += context[pos[0]:pos[1]]
+                        result_line += '</b>'
+                        result_line += context[pos[1]:positions[i+1][0]]
+                    last_pos = positions[-1]
+                    result_line += '<b>'
+                    result_line += context[last_pos[0]:last_pos[1]]
+                    result_line += '</b>'
+                    result_line += context[last_pos[1]:]
                     result_line += r'</li>'
                 result_line += r'</ul><p>'
                 result_line += '<b><i>&nbsp;&nbsp;Количество цитат:</b></i>&nbsp;&nbsp;'

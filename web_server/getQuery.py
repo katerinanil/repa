@@ -110,19 +110,20 @@ def makeContexts(d):
 				if text[new_end] in ['.', '!', '?', '—']:
 					break
 				new_end += 1
-			contexts = res.setdefault(path, [])
+			contexts, positions = res.setdefault(path, ([], []))
 			#Объединяем контексты
 			context = text[new_st:new_end]
 			if not context in contexts:
 				contexts.append(context)
-		#Исключаем повторение контекстов для нескольких слов в запросе
-		exLst = []
-		exSet = set()
-		for el in res[path]:
-			if not el in exSet:
-				exLst.append(el)
-				exSet.add(el)
-		res[path] = exLst
+				positions.append([(st - new_st, end - new_st)])
+			else:
+				conI = contexts.index(context)
+				positions[conI].append((st - new_st, end - new_st))
+		for pos in res[path][1]:
+			for i in range(len(pos)-1):
+				for j in range(len(pos)-i-1):
+					if pos[j][0] > pos[j+1][0]:
+						pos[j], pos[j+1] = pos[j+1], pos[j]
 	#print("муааа", list(res))
 	return res
 
