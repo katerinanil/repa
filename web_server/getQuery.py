@@ -1,6 +1,6 @@
 from collections import OrderedDict
 import shelve
-from stem_2 import stemmer
+from stem_2_1 import stemmer
 
 class Token:
 	def __init__(self, str, type):
