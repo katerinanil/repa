@@ -1,5 +1,3 @@
-#from functools import reduce
-
 stem_arr = {'мам', 'мамам', 'мыл', 'рам'}
 
 flexion_arr = {'а', 'ам', 'ами', 'ас', 'ах', 'ая', 'е', 'её', 'ей', 'ем', 'ла', 
@@ -9,5 +7,7 @@ flexion_arr = {'а', 'ам', 'ами', 'ас', 'ах', 'ая', 'е', 'её', 'е
                'ую', 'шь', 'ать', 'ять', 'еть', 'уть', 'у', 'ю', 'ем', 'ешь', 'ете', 'ет',
                'ут', 'ют', 'ал', 'ял', 'ала', 'яла', 'али', 'яли', 'ул', 'ула', 'ули'}
 
+
+#from functools import reduce
 #def getMaxLen2():
 #return len(reduce(lambda acc, next: acc if len(acc) > len(next) else next, fl_ar))

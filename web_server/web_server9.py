@@ -98,7 +98,7 @@ class myHandler(BaseHTTPRequestHandler):
             myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
                 myHandler.QUTES_COUNTS.append((None, None))
-                result_line += r'<li>'  + path  + r'<ul>'
+                result_line += r'<li>'  + '<b>' + path + '</b>' + r'<ul>'
                 tup = resDict[path]
                 for context, positions in zip(tup[0], tup[1]):
                     result_line += r'<li>'

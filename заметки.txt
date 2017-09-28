@@ -1,0 +1,8 @@
+from funs_tools import totalordering
+
+@totalordering
+class...
+
+https://www.programcreek.com/python/example/57728/functools.total_ordering
+
+
