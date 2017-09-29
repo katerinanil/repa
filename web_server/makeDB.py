@@ -13,10 +13,8 @@ def getWords(path):
     #state=0 - passing letters
     state = 0
     first = -1
-    #lst = []
     for i in range(len(text)):
         ch = text[i]
-        #print(ch, i, ch.isalpha())
         if not state:
             if ch.isalpha():
                 first = i
@@ -24,14 +22,7 @@ def getWords(path):
         elif not ch.isalpha():
             state = 0
             yield text[first:i], first, i
-            #print('first =', first, ', i =', i)
-            #lst.append((text[first:i], first, i))
-    #if state: lst.append((text[first:len(text)], first, len(text)))
     if state: yield text[first:len(text)], first, len(text)
-    #print(text)
-    #print('len =', len(text))
-    #print(lst)
-
 
 def makeDB(files, dbname):
     """
@@ -49,9 +40,5 @@ def makeDB(files, dbname):
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt'], 'mydb')
-    makeDB(['mid_text_2.txt'], 'mydb')
-#mydb.print()
-    #makeDB(['ViM Part 4.txt'])
-    #makeDB(['ViM Part 3.txt'])
-    #makeDB(['ViM Part 4.txt'])
+    #makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME)
+    makeDB(['small_text_1.txt'], config.DATABASE_NAME)

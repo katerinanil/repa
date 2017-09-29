@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4a125c2e-15e9-4e94-9b7a-b364fbccbbae}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>web_server9.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="mid_text_1.txt" />
+    <Content Include="mid_text_2.txt" />
+    <Content Include="no_rus.txt" />
+    <Content Include="small_text_1.txt" />
+    <Content Include="small_text_2.txt" />
+    <Content Include="ViM Part 1.txt" />
+    <Content Include="ViM Part 2.txt" />
+    <Content Include="ViM Part 3.txt" />
+    <Content Include="ViM Part 4.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="config.py" />
+    <Compile Include="getQuery.py" />
+    <Compile Include="makeDB.py" />
+    <Compile Include="stem.py" />
+    <Compile Include="stem_0.py" />
+    <Compile Include="stem_1.py" />
+    <Compile Include="stem_2.py" />
+    <Compile Include="stem_2_1.py" />
+    <Compile Include="stem_flex_arr.py" />
+    <Compile Include="Unittests.py" />
+    <Compile Include="unittest_makeDB.py" />
+    <Compile Include="unittest_stem_0.py" />
+    <Compile Include="unittest_stem_1.py" />
+    <Compile Include="unittest_stem_2.py" />
+    <Compile Include="web_server9.py" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

@@ -119,6 +119,8 @@ def makeContexts(d):
 			else:
 				conI = contexts.index(context)
 				positions[conI].append((st - new_st, end - new_st))
+		for i in range(len(res[path][1])):
+			res[path][1][i] = list(set(res[path][1][i]))
 		for pos in res[path][1]:
 			for i in range(len(pos)-1):
 				for j in range(len(pos)-i-1):
