@@ -61,14 +61,15 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	for num_file, filename in enumerate(filenames_array):
 		maxlen = 0
 		for t in getalltokens(query):
-			if t.token_type == 'alpha' or t.token_type == 'digit':
-				l = len(database[t.string][filename])
-				if l > maxlen: maxlen = l
+			if t.string in database:
+				if t.token_type == 'alpha' or t.token_type == 'digit':
+				    l = len(database[t.string][filename])
+				    if l > maxlen: maxlen = l
 		count = 0
 		#Выбираем указанные позиции
 		for i in range(maxlen):
 			for t in getalltokens(query):
-				if t.token_type == 'alpha' or t.token_type == 'digit':
+				if t.string in database and (t.token_type == 'alpha' or t.token_type == 'digit'):
 					if len(database[t.string][filename]) <= i:
 						continue
 					pos = database[t.string][filename][i]
@@ -79,13 +80,23 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 							pair_start = 0
 						pair_end = pairs[num_file][0]
 						if pair_end == None:
-							pair_end = len(pairs[num_file])
+							#pair_end = len(pairs[num_file])
+							pair_end = 1000
 						if count <= pair_start: continue
 						if count > pair_end + pair_start: break
 					positions = res.setdefault(filename, [])
 					positions.append(pos)
 	database.close()
 	return res
+
+#нужно отсекать дубликаты не в makeContexts
+#for i in range(len(res[path][1])):
+#   res[path][1][i] = list(set(res[path][1][i]))
+#но выше где-то здесь
+#if pair_end == None:
+#	pair_end = 1000
+#if count <= pair_start: continue
+#if count > pair_end + pair_start: break
 
 #избавиться от дубликатов контекстов
 def makeContexts(d):
