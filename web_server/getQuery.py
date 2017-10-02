@@ -98,7 +98,7 @@ def makeContexts(d):
 			new_st = st
 			#Добавляем левый контекст
 			while new_st > 0:
-				if text[new_st-1] in ['.', '!', '?', '—'] and \
+				if text[new_st-1] in ['.', '!', '?', ',', '—'] and \
                                    text[new_st].isspace() and \
 				   text[new_st + 1].isupper():
 					new_st += 1
@@ -107,7 +107,7 @@ def makeContexts(d):
 			#Добавляем правый контекст
 			new_end = end
 			while new_end < len(text):
-				if text[new_end] in ['.', '!', '?', '—']:
+				if text[new_end] in ['.', ',', '!', '?', '—']:
 					break
 				new_end += 1
 			contexts, positions = res.setdefault(path, ([], []))

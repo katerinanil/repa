@@ -1,1 +1,1 @@
-DATABASE_NAME = 'littledb'
+DATABASE_NAME = 'mid_db'
