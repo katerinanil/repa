@@ -1,11 +1,11 @@
 import unittest
-from stem_2 import stemmer
+from stem_2_1 import stemmer
 
 class StemmerCase(unittest.TestCase):
     def test_stem0(self):
         self.assertEqual(list(sorted(stemmer('лаял'))), list(sorted(['лаял', 'ла'])))
     def test_stem1(self):
-        self.assertEqual(list(sorted(stemmer('мам'))), list(sorted(['мам', 'м'])))
+        self.assertEqual(list(sorted(stemmer('мам'))), list(sorted(['мам'])))
     def test_stem2(self):
         self.assertEqual(list(sorted(stemmer('бабах'))), list(sorted(['бабах', 'баб'])))
     def test_stem3(self):

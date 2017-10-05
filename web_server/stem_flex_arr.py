@@ -17,6 +17,8 @@ def getMaxLen(arr):
   return len(maxlen)
 
 
+maxflexlen = getMaxLen(flexion_arr)
+
 #from functools import reduce
 #def getMaxLen2():
 #return len(reduce(lambda acc, next: acc if len(acc) > len(next) else next, fl_ar))

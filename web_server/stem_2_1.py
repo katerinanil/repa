@@ -1,4 +1,4 @@
-from stem_flex_arr import stem_arr, flexion_arr, getMaxLen
+from stem_flex_arr import stem_arr, flexion_arr, maxflexlen
 
 def stemmer(query):
   """ Мы сперва проходимся по словарю окончаний
@@ -11,7 +11,6 @@ def stemmer(query):
   псевдоосновы."""
 
   lenq = len(query)
-  maxflexlen = getMaxLen(flexion_arr)
   count = 0
   for i in range(maxflexlen, -1, -1):
     if lenq > i and (query[lenq - i:] in flexion_arr or i == 0):
