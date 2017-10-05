@@ -42,10 +42,13 @@
     <Compile Include="stem_2_1.py" />
     <Compile Include="stem_flex_arr.py" />
     <Compile Include="Unittests.py" />
+    <Compile Include="unittest_makeContex.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="unittest_makeDB.py" />
     <Compile Include="unittest_stem_0.py" />
     <Compile Include="unittest_stem_1.py" />
-    <Compile Include="unittest_stem_2.py" />
+    <Compile Include="unittest_stem_2_1.py" />
     <Compile Include="web_server9.py" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />

@@ -19,7 +19,6 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Множества пересечений имен файлов для каждого токена
 	number_of_quotes = []
 	newarray = []
-	res = OrderedDict()
 	intersec = set()
 	#Токенизация запроса
 	database = shelve.open(db)
@@ -58,6 +57,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	if pairs != None and len(pairs) < len(filenames_array):
 		for i in range(len(filenames_array) - len(pairs)):
 			pairs.append((None, None))
+	res = OrderedDict()
 	for num_file, filename in enumerate(filenames_array):
 		maxlen = 0
 		for t in getalltokens(query):
@@ -65,7 +65,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 				if t.token_type == 'alpha' or t.token_type == 'digit':
 				    l = len(database[t.string][filename])
 				    if l > maxlen: maxlen = l
-		count = 0
+		count = 1
 		#Выбираем указанные позиции
 		for i in range(maxlen):
 			for t in getalltokens(query):
@@ -73,7 +73,6 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 					if len(database[t.string][filename]) <= i:
 						continue
 					pos = database[t.string][filename][i]
-					count += 1
 					if pairs != None:
 						pair_start = pairs[num_file][1]
 						if pair_start == None:
@@ -82,10 +81,14 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 						if pair_end == None:
 							#pair_end = len(pairs[num_file])
 							pair_end = 1000
-						if count <= pair_start: continue
-						if count > pair_end + pair_start: break
+						if count < pair_start:
+							count += 1
+							continue
+						if count >= pair_end + pair_start: break
 					positions = res.setdefault(filename, [])
-					positions.append(pos)
+					if not pos in positions:
+						count += 1
+						positions.append(pos)
 	database.close()
 	return res
 
@@ -109,7 +112,7 @@ def makeContexts(d):
 			new_st = st
 			#Добавляем левый контекст
 			while new_st > 0:
-				if text[new_st-1] in ['.', '!', '?', ',', '—'] and \
+				if text[new_st-1] in ['.', '!', '?', '—'] and \
                                    text[new_st].isspace() and \
 				   text[new_st + 1].isupper():
 					new_st += 1
@@ -118,7 +121,7 @@ def makeContexts(d):
 			#Добавляем правый контекст
 			new_end = end
 			while new_end < len(text):
-				if text[new_end] in ['.', ',', '!', '?', '—']:
+				if text[new_end] in ['.', '!', '?', '—']:
 					break
 				new_end += 1
 			contexts, positions = res.setdefault(path, ([], []))
@@ -130,8 +133,8 @@ def makeContexts(d):
 			else:
 				conI = contexts.index(context)
 				positions[conI].append((st - new_st, end - new_st))
-		for i in range(len(res[path][1])):
-			res[path][1][i] = list(set(res[path][1][i]))
+		#for i in range(len(res[path][1])):
+		#	res[path][1][i] = list(set(res[path][1][i]))
 		for pos in res[path][1]:
 			for i in range(len(pos)-1):
 				for j in range(len(pos)-i-1):
