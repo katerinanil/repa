@@ -9,7 +9,7 @@ class StemmerCase(unittest.TestCase):
         f1_name = 'test_f1.txt'
         f2_name = 'test_f2.txt'
         f1 = open(f1_name, 'w')
-        f1.write('маму.')
+        f1.write('Ляляля маму. Мррррррр. Бебебе!')
         f1.close()
 
         f2 = open(f2_name, 'w')
@@ -18,7 +18,7 @@ class StemmerCase(unittest.TestCase):
 
         db_name = 'testdb'
         makeDB([f1_name, f2_name], db_name)
-        ass = "[(['маму'], [[(0, 4)]]), (['мамами мыла раму'], [[(0, 6)]])]"
+        ass = "[(['Ляляля маму'], [[(7, 11)]]), (['мамами мыла раму'], [[(0, 6)]])]"
         db = shelve.open(db_name)
         qres = query('маме', db_name)
         res = str(list(makeContexts(qres).values()))

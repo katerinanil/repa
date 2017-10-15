@@ -16,3 +16,4 @@ for c in categories:
 				if len(stem):
 					print(page.page_title, '-', stem)
 					f.write(stem + ', ')
+f.close()
