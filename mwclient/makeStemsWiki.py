@@ -1,9 +1,10 @@
 import mwclient
 
 f = open('stems.txt', 'w')
-categories = ['Отглагольные существительные на -ка',
-			  'Отглагольные существительные на -ание',
-			  'Отглагольные существительные на -ение‎']
+#categories = ['Отглагольные существительные на -ка',
+#			  'Отглагольные существительные на -ание',
+#			  'Отглагольные существительные на -ение‎']
+categories = ['Одушевлённые/ru']
 site = mwclient.Site('ru.wiktionary.org')
 for c in categories:
 	for page in site.Categories[c]:
