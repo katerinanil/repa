@@ -4,13 +4,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3b386664-640c-4946-b564-6fd8e4f94ea8</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>StepsWiki.py</StartupFile>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>StemsWiki.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>StepsWiki</Name>
+    <Name>StemsWiki</Name>
     <RootNamespace>StepsWiki</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,7 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="StepsWiki.py" />
+    <Compile Include="StemsWiki.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

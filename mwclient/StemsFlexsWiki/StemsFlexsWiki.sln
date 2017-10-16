@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "StepsWiki", "StepsWiki\StepsWiki.pyproj", "{3B386664-640C-4946-B564-6FD8E4F94EA8}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "StemsFlexsWiki", "StemsFlexsWiki\StemsFlexsWiki.pyproj", "{51DEACD2-5F05-4304-AA20-6B05CB44D083}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,8 +11,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3B386664-640C-4946-B564-6FD8E4F94EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B386664-640C-4946-B564-6FD8E4F94EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51DEACD2-5F05-4304-AA20-6B05CB44D083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51DEACD2-5F05-4304-AA20-6B05CB44D083}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
