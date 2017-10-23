@@ -10,11 +10,11 @@ stems = {}
 templs = set()
 
 for c in categories:
-    for page in site.Categories[c]:
+    for page in site.Categories[c]: # почему от с
         isStem = False
         templ = ''  
         for l in page.text().split('\n'):
-            if not isStem:
+            if not isStem: #что за иф нот, зачем вообще флаг
                 if l[:8] == '{{сущ ru':
                     isStem = True
                     templ = l[2:]
@@ -30,7 +30,8 @@ for c in categories:
                 else:
                     isStem = False
                     templs.add(templ)
+if __name__ == '__main__':
+    pprint(stems)
+    print()
+    pprint(templs)
 
-pprint(stems)
-print()
-pprint(templs)
