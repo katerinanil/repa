@@ -2,7 +2,6 @@ from pprint import pprint
 import mwclient
 from StemsDictWiki import templs
 
-
 site = mwclient.Site('ru.wiktionary.org')
 templDict = {}
 templArr = []
