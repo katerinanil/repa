@@ -1,10 +1,10 @@
 from pprint import pprint
 import mwclient
-from StemsDictWiki import templs
+from StemsDictWiki import loadDict, db_templs
 
 site = mwclient.Site('ru.wiktionary.org')
 templDict = {}
-templArr = []
+templArr = loadDict(db_templs)
 
 print(templs)
 
