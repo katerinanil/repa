@@ -5,8 +5,8 @@ import shelve
 def createStemsTempls():
     site = mwclient.Site('ru.wiktionary.org')
     categories = ['Отглагольные существительные на -ка',
-			      #'Отглагольные существительные на -ание',
-			      #'Отглагольные существительные на -ение‎'
+			      'Отглагольные существительные на -ание',
+			      'Отглагольные существительные на -ение‎'
                   ]
     stems = {}
     templs = set()
@@ -42,7 +42,7 @@ def saveDict(d, name):
 def loadDict(name):
     d = {}
     db = shelve.open(name)
-    for k in d: d[k] = db[k]
+    for k in db: d[k] = db[k]
     db.close()
     return d
 
