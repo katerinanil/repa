@@ -16,7 +16,7 @@ def createStemsTempls():
             isStem = False
             templ = ''  
             for l in page.text().split('\n'):
-                if not isStem: #что за иф нот, зачем вообще флаг
+                if not isStem: 
                     if l[:8] == '{{сущ ru':
                         isStem = True
                         templ = l[2:]
