@@ -40,6 +40,9 @@
     <Compile Include="stem_1.py" />
     <Compile Include="stem_2.py" />
     <Compile Include="stem_2_1.py" />
+    <Compile Include="stem_3.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stem_flex_arr.py" />
     <Compile Include="Unittests.py" />
     <Compile Include="unittest_makeContex.py">
