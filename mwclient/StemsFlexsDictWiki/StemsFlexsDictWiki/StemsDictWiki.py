@@ -4,34 +4,39 @@ import shelve
 
 def createStemsTempls():
     site = mwclient.Site('ru.wiktionary.org')
-    categories = ['Отглагольные существительные на -ка',
-			      'Отглагольные существительные на -ание',
-			      'Отглагольные существительные на -ение‎'
-                  ]
+    category = 'Неодушевлённые/ru'
     stems = {}
     templs = set()
 
-    for c in categories:
-        for page in site.Categories[c]:
-            isStem = False
-            templ = ''  
-            for l in page.text().split('\n'):
-                if not isStem: 
-                    if l[:8] == '{{сущ ru':
-                        isStem = True
-                        templ = l[2:]
+    n = 82000
+    count = 2000
+    step = n / count
+    i = 0
+    for page in site.Categories[category]:
+        if i >= n: break
+        i += 1
+        if i % step != 0: continue
+        isStem = False
+        templ = ''  
+        for l in page.text().split('\n'):
+            if not isStem: 
+                if l[:8] == '{{сущ ru':
+                    isStem = True
+                    templ = l[2:]
+            else:
+                if l[:7] == '|основа':
+                    stI = l.find('=', 7)
+                    if stI == -1: continue
+                    stem = l[stI+1:].replace('\u0301', '')
+                    stem = stem.replace('\u045d', '')
+                    stem = stem.replace('\u0300', '')
+                    stem = stem.replace('\u030D', '')
+                    stemNum = l[1:stI]
+                    if not len(stem): continue
+                    stems.setdefault(stem, set()).add((templ, stemNum))
                 else:
-                    if l[:7] == '|основа':
-                        stI = l.find('=', 7)
-                        if stI == -1: continue
-                        stem = l[stI+1:].replace('\u0301', '')
-                        stem = stem.replace('\u045d', '')
-                        stemNum = l[1:stI]
-                        if not len(stem): continue
-                        stems.setdefault(stem, set()).add((templ, stemNum))
-                    else:
-                        isStem = False
-                        templs.add(templ)
+                    isStem = False
+                    templs.add(templ)
     return stems, templs
 
 def saveDict(d, name):
@@ -51,5 +56,5 @@ if __name__ == '__main__':
     pprint(stems)
     print()
     pprint(templs)
-    saveDict(stems, 'db_stems')
-    saveDict({'templs': templs}, 'db_templs')
+    saveDict(stems, 'db_2000_stems')
+    saveDict({'templs': templs}, 'db_2000_templs')

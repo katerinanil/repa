@@ -1,1 +1,3 @@
 DATABASE_NAME = 'mid_db'
+DATABASE_STEMS_NAME = 'db_stems'
+DATABASE_FLEX_NAME = 'db_flex'

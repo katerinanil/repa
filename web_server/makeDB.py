@@ -1,6 +1,6 @@
 import shelve
 import config
-from stem_2_1 import stemmer
+from stem_3 import stemmer
 
 def getWords(path):
     """

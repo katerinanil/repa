@@ -52,6 +52,9 @@
     <Compile Include="unittest_stem_0.py" />
     <Compile Include="unittest_stem_1.py" />
     <Compile Include="unittest_stem_2_1.py" />
+    <Compile Include="unittest_stem_3.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="web_server9.py" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
