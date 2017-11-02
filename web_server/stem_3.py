@@ -2,8 +2,8 @@ import shelve
 import stem_2_1
 import config
 
-def stemmer(query, db_stems_name = config.DATABASE_STEMS_NAME, \
-            db_flex_name = config.DATABASE_FLEX_NAME):
+def stemmer(query, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
+            db_flex_name = config.DATABASE_2000_FLEX_NAME):
     db_stems = shelve.open(db_flex_name)
     db_flex = shelve.open(db_flex_name)
     flag = True
@@ -19,3 +19,5 @@ def stemmer(query, db_stems_name = config.DATABASE_STEMS_NAME, \
     #   for el in stem_2_1.stemmer(query):
     #       yield el
     if flag: yield from stem_2_1.stemmer(query)
+
+

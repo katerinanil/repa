@@ -40,5 +40,5 @@ def makeDB(files, dbname):
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME)
+    makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME_2000)
     #makeDB(['small_text_1.txt', 'small_text_2.txt'], config.DATABASE_NAME)

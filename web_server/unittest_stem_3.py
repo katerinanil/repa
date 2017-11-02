@@ -3,27 +3,27 @@ from stem_3 import stemmer
 
 class StemmerCase(unittest.TestCase):
     def test_stem0(self):
-        self.assertEqual(list(sorted(stemmer('лаял'))), list(sorted(['лаял', 'ла'])))
+        self.assertEqual(list(sorted(stemmer('Р»Р°СЏР»'))), list(sorted(['Р»Р°СЏР»', 'Р»Р°'])))
     def test_stem1(self):
-        self.assertEqual(list(sorted(stemmer('мам'))), list(sorted(['мам'])))
+        self.assertEqual(list(sorted(stemmer('РјР°Рј'))), list(sorted(['РјР°Рј'])))
     def test_stem2(self):
-        self.assertEqual(list(sorted(stemmer('бабах'))), list(sorted(['бабах', 'баб'])))
+        self.assertEqual(list(sorted(stemmer('Р±Р°Р±Р°С…'))), list(sorted(['Р±Р°Р±Р°С…', 'Р±Р°Р±'])))
     def test_stem3(self):
-        self.assertEqual(list(sorted(stemmer('ба'))), list(sorted(['ба', 'б'])))
+        self.assertEqual(list(sorted(stemmer('Р±Р°'))), list(sorted(['Р±Р°', 'Р±'])))
     def test_stem4(self):
-        self.assertEqual(list(sorted(stemmer('ого'))), list(sorted(['ого', 'ог'])))
+        self.assertEqual(list(sorted(stemmer('РѕРіРѕ'))), list(sorted(['РѕРіРѕ', 'РѕРі'])))
     def test_stem5(self):
-        self.assertEqual(list(sorted(stemmer('пам'))), list(sorted(['пам', 'п'])))
+        self.assertEqual(list(sorted(stemmer('РїР°Рј'))), list(sorted(['РїР°Рј', 'Рї'])))
     def test_stem6(self):
-        self.assertEqual(list(sorted(stemmer('а'))), list(sorted(['а'])))
+        self.assertEqual(list(sorted(stemmer('Р°'))), list(sorted(['Р°'])))
     def test_stem7(self):
-        self.assertEqual(list(sorted(stemmer('абвгдейку'))), list(sorted(['абвгдейку', 'абвгдейк'])))
+        self.assertEqual(list(sorted(stemmer('Р°Р±РІРіРґРµР№РєСѓ'))), list(sorted(['Р°Р±РІРіРґРµР№РєСѓ', 'Р°Р±РІРіРґРµР№Рє'])))
     def test_stem8(self):
-        self.assertEqual(list(sorted(stemmer('мала'))), list(sorted(['мала', 'м', 'ма', 'мал'])))
+        self.assertEqual(list(sorted(stemmer('РјР°Р»Р°'))), list(sorted(['РјР°Р»Р°', 'Рј', 'РјР°', 'РјР°Р»'])))
     def test_stem9(self):
-        self.assertEqual(list(sorted(stemmer('мыла'))), list(sorted(['мыл'])))
+        self.assertEqual(list(sorted(stemmer('РґС‹РјР°'))), list(sorted(['РґС‹Рј'])))
     def test_stem10(self):
-        self.assertEqual(list(sorted(stemmer('мамами'))), list(sorted(['мам', 'мамам'])))
+        self.assertEqual(list(sorted(stemmer('РјР°РјР°РјРё'))), list(sorted(['РјР°Рј', 'РјР°РјР°Рј'])))
 
 if __name__ == '__main__':
     unittest.main()
