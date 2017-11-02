@@ -13,6 +13,8 @@ def createFlexes():
                 lCloseBrace = l.find('}')
                 rCloseBrace = l.rfind('}')
                 flex = l[rCloseBrace+1:]
+                for i in range(768, 879):
+                    flex = flex.replace(chr(i), '')
                 stemNum = l[rOpenBrace+1:lCloseBrace]
                 templDict.setdefault(flex, set()).add((t, stemNum))
     return templDict
