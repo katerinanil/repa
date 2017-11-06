@@ -15,6 +15,7 @@ def createFlexes():
                 flex = l[rCloseBrace+1:]
                 for i in range(768, 879):
                     flex = flex.replace(chr(i), '')
+                    flex = flex.replace(' ', '')
                 stemNum = l[rOpenBrace+1:lCloseBrace]
                 templDict.setdefault(flex, set()).add((t, stemNum))
     return templDict
@@ -22,4 +23,5 @@ def createFlexes():
 if __name__ == '__main__':
     templDict = createFlexes()
     pprint(templDict)
-    saveDict(templDict, 'db_2000_flex')
+    saveDict(templDict, 'db_2000_flex_2')
+    print(templDict.keys())
