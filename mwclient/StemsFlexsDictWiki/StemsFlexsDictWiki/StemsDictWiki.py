@@ -33,7 +33,8 @@ def createStemsTempls():
                     stem = stem.replace('\u030D', '')
                     stemNum = l[1:stI]
                     if not len(stem): continue
-                    stems.setdefault(stem, set()).add((templ, stemNum))
+                    stems.setdefault(stem, set())\
+                        .add({(templ,stemNum):page.page_title})
                 else:
                     isStem = False
                     templs.add(templ)
