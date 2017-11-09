@@ -6,7 +6,7 @@
     <ProjectGuid>51deacd2-5f05-4304-aa20-6b05cb44d083</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>StemsDictWiki.py</StartupFile>
+    <StartupFile>FlexDictWiki.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="config.py" />
     <Compile Include="FlexDictWiki.py" />
     <Compile Include="StemsDictWiki.py" />
   </ItemGroup>

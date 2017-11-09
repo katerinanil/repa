@@ -1,10 +1,11 @@
 ﻿from pprint import pprint
 import mwclient
 import shelve
+import config
 
 def createStemsTempls():
     site = mwclient.Site('ru.wiktionary.org')
-    category = 'Отглагольные существительные на -ание‎'
+    category = 'Слова из списка Сводеша/ru'
     stems = {}
     templs = set()
 
@@ -33,7 +34,8 @@ def createStemsTempls():
                     stem = stem.replace('\u030D', '')
                     stemNum = l[1:stI]
                     if not len(stem): continue
-                    stems.setdefault(stem, {(templ,stemNum):page.page_title})
+                    stems.setdefault(stem, {})\
+                        .update({(templ,stemNum):page.page_title})
                 else:
                     isStem = False
                     templs.add(templ)
@@ -56,5 +58,5 @@ if __name__ == '__main__':
     pprint(stems)
     print()
     pprint(templs)
-    saveDict(stems, 'db_2000_stems_new')
-    saveDict({'templs': templs}, 'db_2000_templs_new')
+    saveDict(stems, config.DATABASE_STEMS_NAME)
+    saveDict({'templs': templs}, config.DATABASE_TEMPLS_NAME)

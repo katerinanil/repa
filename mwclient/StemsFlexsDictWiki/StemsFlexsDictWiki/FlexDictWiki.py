@@ -1,11 +1,12 @@
 from pprint import pprint
 import mwclient
+import config
 from StemsDictWiki import loadDict, saveDict
 
 def createFlexes():
     site = mwclient.Site('ru.wiktionary.org')
     templDict = {}
-    for t in loadDict('db_2000_templs')['templs']:    
+    for t in loadDict(config.DATABASE_TEMPLS_NAME)['templs']:    
         page = site.Pages['Шаблон:%s' % t]
         for l in page.text().split('\n'):
             if l.find('={{{основа') != -1:
@@ -23,5 +24,5 @@ def createFlexes():
 if __name__ == '__main__':
     templDict = createFlexes()
     pprint(templDict)
-    saveDict(templDict, 'db_2000_flex_2')
+    saveDict(templDict, config.DATABASE_FLEX_NAME)
     print(templDict.keys())
