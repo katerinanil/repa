@@ -4,18 +4,18 @@ import shelve
 
 def createStemsTempls():
     site = mwclient.Site('ru.wiktionary.org')
-    category = 'Неодушевлённые/ru'
+    category = 'Отглагольные существительные на -ание‎'
     stems = {}
     templs = set()
 
-    n = 82000
-    count = 2000
-    step = n / count
-    i = 0
+    #n = 82000
+    #count = 2000
+    #step = n / count
+    #i = 0
     for page in site.Categories[category]:
-        if i >= n: break
-        i += 1
-        if i % step != 0: continue
+        #if i >= n: break
+        #i += 1
+        #if i % step != 0: continue
         isStem = False
         templ = ''  
         for l in page.text().split('\n'):
@@ -33,8 +33,7 @@ def createStemsTempls():
                     stem = stem.replace('\u030D', '')
                     stemNum = l[1:stI]
                     if not len(stem): continue
-                    stems.setdefault(stem, set())\
-                        .add({(templ,stemNum):page.page_title})
+                    stems.setdefault(stem, {(templ,stemNum):page.page_title})
                 else:
                     isStem = False
                     templs.add(templ)
@@ -57,5 +56,5 @@ if __name__ == '__main__':
     pprint(stems)
     print()
     pprint(templs)
-    saveDict(stems, 'db_2000_stems')
-    saveDict({'templs': templs}, 'db_2000_templs')
+    saveDict(stems, 'db_2000_stems_new')
+    saveDict({'templs': templs}, 'db_2000_templs_new')

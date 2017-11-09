@@ -24,4 +24,18 @@ def stemmer(query, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
         #print('LJKA')
         yield from stem_2_1.stemmer(query)
     else:
-        print('NELOSHKA')
+        print('Работает новый алгоритм')
+
+"""{ 
+"пирожок": { 
+('сущ ru, основа'):"пирожок", 
+('сущ ru, основа1'):"пирожок", 
+... 
+} ; 
+"пирожк": { 
+('сущ ru, основа'):"пирожок", 
+('сущ ru, основа3'):"пирожок", 
+...
+}
+...
+}"""
