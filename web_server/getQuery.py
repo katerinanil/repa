@@ -1,21 +1,20 @@
 from collections import OrderedDict
 import shelve
-from stem_3 import stemmer
 
 class Token:
 	def __init__(self, str, type):
 		self.string = str
 		self.token_type = type
 
-def getalltokens(query):
+def getalltokens(query, lemma):
 	for w in filter(bool, query.split()):
-		for st in stemmer(w):
+		for st in lemma.lemmatize(w):
 			if st.isalpha(): yield Token(st, 'alpha')
 			elif st.isdigit(): yield Token(st, 'digit')
 			else: yield Token(st, 'other')
 			#st = '<b>' + st + '</b>'
 
-def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
+def query(query, db, lemma, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Множества пересечений имен файлов для каждого токена
 	number_of_quotes = []
 	newarray = []
@@ -23,7 +22,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	#Токенизация запроса
 	database = shelve.open(db)
 	first_token = True
-	for i in getalltokens(query):
+	for i in getalltokens(query, lemma):
 		#Проверяем, содержится ли токен в db
 		# print('IST', i.string)
 		if i.string in database:
@@ -60,7 +59,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 	res = OrderedDict()
 	for num_file, filename in enumerate(filenames_array):
 		maxlen = 0
-		for t in getalltokens(query):
+		for t in getalltokens(query, lemma):
 			if t.string in database:
 				if t.token_type == 'alpha' or t.token_type == 'digit':
 				    l = len(database[t.string][filename])
@@ -68,7 +67,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 		count = 1
 		#Выбираем указанные позиции
 		for i in range(maxlen):
-			for t in getalltokens(query):
+			for t in getalltokens(query, lemma):
 				if t.string in database and (t.token_type == 'alpha' or t.token_type == 'digit'):
 					if len(database[t.string][filename]) <= i:
 						continue
@@ -104,6 +103,7 @@ def query(query, db, limit_doc=-1, offset_doc=-1, pairs=None):
 #избавиться от дубликатов контекстов
 def makeContexts(d):
 	res = OrderedDict()
+	punc = ['.', '!', '?', '—', '–', '[', ']']
 	for path in d:
 		f = open(path)
 		text = f.read()
@@ -112,16 +112,17 @@ def makeContexts(d):
 			new_st = st
 			#Добавляем левый контекст
 			while new_st > 0:
-				if text[new_st-1] in ['.', '!', '?', '—'] and \
-                                   text[new_st].isspace() and \
-				   text[new_st + 1].isupper():
+				if text[new_st-1] in punc and  text[new_st].isspace() and \
+                    (text[new_st + 1].isupper() or text[new_st + 1] in punc):
 					new_st += 1
 					break
 				new_st -= 1
 			#Добавляем правый контекст
 			new_end = end
-			while new_end < len(text):
-				if text[new_end] in ['.', '!', '?', '—']:
+			while new_end < len(text) - 2:
+				if text[new_end] in punc and text[new_end + 1].isspace() and \
+				    (text[new_end + 2].isupper() or text[new_end + 2] in punc):
+					new_end += 1
 					break
 				new_end += 1
 			contexts, positions = res.setdefault(path, ([], []))

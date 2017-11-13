@@ -1,6 +1,6 @@
 import shelve
 import config
-from stem_3 import stemmer
+from lemmatizer import lemmatizer
 
 def getWords(path):
     """
@@ -29,16 +29,18 @@ def makeDB(files, dbname):
     Функция в качестве аргумента принимает список из путей и создаёт базу данных
     вида: {'псевдооснова': {'путь к файлу': [(индекс начала, индекс конца слова)]}}
     """
-    db = shelve.open(dbname, writeback = True) 
+    db = shelve.open(dbname, writeback = True)
+    lemma = lemmatizer()
     for f in files:        
         for word, left, right in getWords(f):
-            for st in stemmer(word.lower()):
+            for st in lemma.lemmatize(word.lower()):
                 s = db.setdefault(st, {})
                 l = s.setdefault(f, [])
                 l.append((left, right))
-                db[st] = s
+                #useless line below
+                #db[st] = s
     db.close()
 
 if __name__ == '__main__':
-    makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME_2000)
+    makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME)
     #makeDB(['small_text_1.txt', 'small_text_2.txt'], config.DATABASE_NAME)

@@ -1,15 +1,15 @@
 import shelve
-import stem_2_1
 import config
+import stem_2_1
 
 class lemmatizer():
-    def __init__(self, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
-                       db_flex_name = config.DATABASE_2000_FLEX_NAME):
+    def __init__(self, db_stems_name = config.DATABASE_STEMS_NAME, \
+                       db_flex_name = config.DATABASE_FLEX_NAME):
         self.db_stems = shelve.open(db_stems_name)
         self.db_flex = shelve.open(db_flex_name)
     def __del__(self):
-        db_stems.close()
-        db_flex.close()
+        self.db_stems.close()
+        self.db_flex.close()
     def lemmatize(self, query):
         flag = True
         for i in range(len(query), 0, -1):

@@ -3,8 +3,10 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import cgi
 import config
 import getQuery
+from lemmatizer import lemmatizer
 
 class myHandler(BaseHTTPRequestHandler):
+    lemma = lemmatizer()
     LAST_QUERY = ''
     LAST_DOC_COUNT = ''
     LAST_DOC_START = ''
@@ -92,8 +94,8 @@ class myHandler(BaseHTTPRequestHandler):
                       'DC =', doc_count, 'DS =', doc_start)
                 myHandler.QUTES_COUNTS = None
             print('QQ =', myHandler.QUTES_COUNTS)
-            qres = getQuery.query(inputWords, config.DATABASE_NAME_2000,
-                doc_count, doc_start, myHandler.QUTES_COUNTS)
+            qres = getQuery.query(inputWords, config.DATABASE_NAME,
+                myHandler.lemma, doc_count, doc_start, myHandler.QUTES_COUNTS)
             resDict = getQuery.makeContexts(qres)
             myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
