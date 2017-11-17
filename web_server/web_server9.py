@@ -94,7 +94,7 @@ class myHandler(BaseHTTPRequestHandler):
                       'DC =', doc_count, 'DS =', doc_start)
                 myHandler.QUTES_COUNTS = None
             print('QQ =', myHandler.QUTES_COUNTS)
-            qres = getQuery.query(inputWords, config.DATABASE_NAME,
+            qres = getQuery.query(inputWords, config.DATABASE_NAME_ViM,
                 myHandler.lemma, doc_count, doc_start, myHandler.QUTES_COUNTS)
             resDict = getQuery.makeContexts(qres)
             myHandler.QUTES_COUNTS = []

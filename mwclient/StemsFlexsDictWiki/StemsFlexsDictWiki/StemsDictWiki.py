@@ -21,19 +21,21 @@ def createStemsTempls():
         templ = ''  
         for l in page.text().split('\n'):
             if not isStem: 
-                if l[:8] == '{{сущ ru':
+                if l[:8] == '{{сущ ru': #parsing our page
                     isStem = True
                     templ = l[2:]
             else:
                 if l[:7] == '|основа':
                     stI = l.find('=', 7)
                     if stI == -1: continue
-                    stem = l[stI+1:].replace('\u0301', '')
+                    stem = l[stI+1:].replace('\u0301', '') #replacing accent marks
                     stem = stem.replace('\u045d', '')
                     stem = stem.replace('\u0300', '')
                     stem = stem.replace('\u030D', '')
                     stemNum = l[1:stI]
                     if not len(stem): continue
+                    """creating a dictionary with such structure:
+                        {"stem":{(templ,stem_number):lem})"""
                     stems.setdefault(stem, {})\
                         .update({(templ,stemNum):page.page_title})
                 else:
@@ -41,12 +43,12 @@ def createStemsTempls():
                     templs.add(templ)
     return stems, templs
 
-def saveDict(d, name):
+def saveDict(d, name): #serialization
     db = shelve.open(name)
     for k in d: db[k] = d[k]
     db.close()
 
-def loadDict(name):
+def loadDict(name):#deserialization
     d = {}
     db = shelve.open(name)
     for k in db: d[k] = db[k]
