@@ -48,6 +48,9 @@
     </Compile>
     <Compile Include="stem_flex_arr.py" />
     <Compile Include="Unittests.py" />
+    <Compile Include="unittest_lemmatizer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="unittest_makeContex.py">
       <SubType>Code</SubType>
     </Compile>
