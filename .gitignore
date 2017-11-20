@@ -154,3 +154,6 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/web_server/db_ViM.bak
+/web_server/db_ViM.dat
+/web_server/db_ViM.dir
