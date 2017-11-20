@@ -64,30 +64,14 @@ def query(query, db, lemma, limit_doc=-1, offset_doc=-1, pairs=None):
 				if t.token_type == 'alpha' or t.token_type == 'digit':
 				    l = len(database[t.string][filename])
 				    if l > maxlen: maxlen = l
-		count = 1
 		#Выбираем указанные позиции
 		for i in range(maxlen):
 			for t in getalltokens(query, lemma):
 				if t.string in database and (t.token_type == 'alpha' or t.token_type == 'digit'):
-					if len(database[t.string][filename]) <= i:
-						continue
+					if len(database[t.string][filename]) <= i: continue
 					pos = database[t.string][filename][i]
-					if pairs != None:
-						pair_start = pairs[num_file][1]
-						if pair_start == None:
-							pair_start = 0
-						pair_end = pairs[num_file][0]
-						if pair_end == None:
-							#pair_end = len(pairs[num_file])
-							pair_end = 1000
-						if count < pair_start:
-							count += 1
-							continue
-						if count >= pair_end + pair_start: break
 					positions = res.setdefault(filename, [])
-					if not pos in positions:
-						count += 1
-						positions.append(pos)
+					if not pos in positions: positions.append(pos)
 	database.close()
 	return res
 
@@ -101,7 +85,7 @@ def query(query, db, lemma, limit_doc=-1, offset_doc=-1, pairs=None):
 #if count > pair_end + pair_start: break
 
 #избавиться от дубликатов контекстов
-def makeContexts(d):
+def makeContexts(d, pairs=None):
 	res = OrderedDict()
 	punc = ['.', '!', '?', '—', '–', '[', ']']
 	for path in d:
@@ -142,6 +126,18 @@ def makeContexts(d):
 					if pos[j][0] > pos[j+1][0]:
 						pos[j], pos[j+1] = pos[j+1], pos[j]
 	#print("муааа", list(res))
+
+	if pairs != None:
+		for num, key in enumerate(res):
+			st = pairs[num][1]
+			if st == None: st = 0
+			end = pairs[num][0]
+			if end == None:
+				end = len(res[key][0])
+			else: end += st
+			res[key] = (res[key][0][st:end], \
+                        res[key][1][st:end])
+
 	return res
 
 if __name__ == '__main__':

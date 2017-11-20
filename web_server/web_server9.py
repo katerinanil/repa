@@ -61,7 +61,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
 
-        inputWords = form.getvalue('query')
+        inputWords = form.getvalue('query').lower()
         doc_count = form.getvalue('doc_count')
         doc_start = form.getvalue('doc_start')
         try:
@@ -94,9 +94,9 @@ class myHandler(BaseHTTPRequestHandler):
                       'DC =', doc_count, 'DS =', doc_start)
                 myHandler.QUTES_COUNTS = None
             print('QQ =', myHandler.QUTES_COUNTS)
-            qres = getQuery.query(inputWords, config.DATABASE_NAME_ViM,
+            qres = getQuery.query(inputWords, config.DATABASE_NAME,
                 myHandler.lemma, doc_count, doc_start, myHandler.QUTES_COUNTS)
-            resDict = getQuery.makeContexts(qres)
+            resDict = getQuery.makeContexts(qres, myHandler.QUTES_COUNTS)
             myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
                 myHandler.QUTES_COUNTS.append((None, None))
@@ -105,12 +105,12 @@ class myHandler(BaseHTTPRequestHandler):
                 for context, positions in zip(tup[0], tup[1]):
                     result_line += r'<li>'
                     result_line += context[:positions[0][0]]
-                    for i in range(len(positions)-1):
-                        pos = positions[i]
+                    for j in range(len(positions)-1):
+                        pos = positions[j]
                         result_line += '<b>'
                         result_line += context[pos[0]:pos[1]]
                         result_line += '</b>'
-                        result_line += context[pos[1]:positions[i+1][0]]
+                        result_line += context[pos[1]:positions[j+1][0]]
                     last_pos = positions[-1]
                     result_line += '<b>'
                     result_line += context[last_pos[0]:last_pos[1]]
