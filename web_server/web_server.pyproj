@@ -38,6 +38,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="makeDB.py" />
+    <Compile Include="sorting.py" />
     <Compile Include="stem.py" />
     <Compile Include="stem_0.py" />
     <Compile Include="stem_1.py" />
@@ -55,6 +56,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="unittest_makeDB.py" />
+    <Compile Include="unittest_sorting.py" />
     <Compile Include="unittest_stem_0.py" />
     <Compile Include="unittest_stem_1.py" />
     <Compile Include="unittest_stem_2_1.py" />

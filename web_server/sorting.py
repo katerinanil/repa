@@ -17,10 +17,20 @@ def sort(*arrays):
         if listOfIndeces[pos] < len(ar):
             listMinEl[pos] = ar[listOfIndeces[pos]] #replace yielded element with the following
         else:
-            listMinEl[pos] = math.inf #if all elements in the arr are out,
+            listMinEl[pos] = float("inf") #if all elements in the arr are out,
                                     #we replace them with positive infinity
         yield minimum
-        
-"""for s in sort([1,5,6,9,90],[90,800],[1.1,5]):
-	print(s)"""
+      
+#def sort(*lists):
+#	indicies = [0] * len(lists)
+#	minI = -1
+#	for i in range(1, len(lists)):
+#		if minI == -1 and len(lists[i]) > indicies[i]:
+#			pass
+#		if lists[i][indicies[i]] < lists[i][indicies[minI]]:
+#			minI = i
+
+if __name__ == '__main__':  
+    for s in sort([1,5,6,9,90],[90,800],[1.1,5]):
+        print(s)
 #что если входной список пуст
