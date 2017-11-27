@@ -23,7 +23,7 @@ class StemmerCase(unittest.TestCase):
     def test_stem9(self):
         self.assertEqual(list(sorted(stemmer('дыма'))), list(sorted(['дым'])))
     def test_stem10(self):
-        self.assertEqual(list(sorted(stemmer('мамами'))), list(sorted(['мам', 'мамам'])))
+        self.assertEqual(list(sorted(stemmer('мамами'))), list(sorted(['мам'])))
 
 if __name__ == '__main__':
     unittest.main()

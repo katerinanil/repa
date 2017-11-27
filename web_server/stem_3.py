@@ -2,8 +2,8 @@ import shelve
 import stem_2_1
 import config
 
-def stemmer(query, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
-                   db_flex_name = config.DATABASE_2000_FLEX_NAME):
+def stemmer(query, db_stems_name = config.DATABASE_STEMS_NAME, \
+                   db_flex_name = config.DATABASE_FLEX_NAME):
     db_stems = shelve.open(db_stems_name)
     db_flex = shelve.open(db_flex_name)
     flag = True
@@ -12,7 +12,7 @@ def stemmer(query, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
         flex = query[i:]
         if stem in db_stems and \
            flex in db_flex and \
-           db_stems[stem] & db_flex[flex]:
+           set(db_stems[stem]) & db_flex[flex]:
             flag = False
             yield stem
     #if flag:
@@ -21,10 +21,9 @@ def stemmer(query, db_stems_name = config.DATABASE_2000_STEMS_NAME, \
     db_stems.close()
     db_flex.close()
     if flag:
-        #print('LJKA')
         yield from stem_2_1.stemmer(query)
-    else:
-        print('Работает новый алгоритм')
+    #else:
+    #    print('Работает новый алгоритм')
 
 """{ 
 "пирожок": { 
