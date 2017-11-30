@@ -32,6 +32,8 @@
     <Content Include="ViM Part 4.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aho.py" />
+    <Compile Include="aho_cor.py" />
     <Compile Include="config.py" />
     <Compile Include="getQuery.py" />
     <Compile Include="lemmatizer.py">
