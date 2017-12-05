@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4a125c2e-15e9-4e94-9b7a-b364fbccbbae}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>web_server9.py</StartupFile>
+    <StartupFile>sorting.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -41,6 +41,9 @@
     </Compile>
     <Compile Include="makeDB.py" />
     <Compile Include="sorting.py" />
+    <Compile Include="sorting_2.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stem.py" />
     <Compile Include="stem_0.py" />
     <Compile Include="stem_1.py" />

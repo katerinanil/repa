@@ -1,6 +1,7 @@
 import math
 
 def sort(*arrays):
+    arrays = list(filter(bool, arrays))
     listOfIndeces = [] #list of indices of minimal elements
     listMinEl = [] #list of current minimal elements
     length = 0 #length of all elements in all lists
@@ -31,6 +32,6 @@ def sort(*arrays):
 #			minI = i
 
 if __name__ == '__main__':  
-    for s in sort([1,5,6,9,90],[90,800],[1.1,5]):
+    for s in sort([1,5,6,9,90],[90,800],[1.1,5],[]):
         print(s)
 #что если входной список пуст
