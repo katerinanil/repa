@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4a125c2e-15e9-4e94-9b7a-b364fbccbbae}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>sorting.py</StartupFile>
+    <StartupFile>aho_rec.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -33,7 +33,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="aho.py" />
-    <Compile Include="aho_cor.py" />
+    <Compile Include="aho_rec.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="config.py" />
     <Compile Include="getQuery.py" />
     <Compile Include="lemmatizer.py">
