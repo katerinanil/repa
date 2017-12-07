@@ -11,6 +11,9 @@ def aho(word):
     for sub in lst[0]:
         pass
 
+    for s in substring[s-1]:
+        if len(s[s-1:]) >= 0:
+            yield s[s-1]
 
     visit = False
     index = 0
