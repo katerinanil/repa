@@ -14,7 +14,7 @@ def _aho_rec(ans, lst):
             lst_copy.append((nextI, nextSub))
             yield from _aho_rec(lst_copy, lst)
 
-def aho(word):
+def aho(morph_arr, word):
     lst = [[] for i in range(len(word))]
     for i, sub in aho_corrasick.find(morph_arr, word):
         lst[i].append(sub)
@@ -24,6 +24,6 @@ def aho(word):
 
 
 if __name__ == '__main__':
-    for ans in aho('abcde'):
+    for ans in aho(morph_arr, 'abcde'):
         print(ans)
     pass
