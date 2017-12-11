@@ -1,19 +1,21 @@
 from string_algorithms import aho_corrasick, naive_find
 
-morph_arr = ('ab','cd','e','abc','de')
+morph_arr = ('a','b','cde','ab','abc')
 
 def _aho_rec(ans, lst):
     i = ans[-1][0]
     sub = ans[-1][1]
     nextI = i + len(sub)
-    if nextI == len(lst): yield ans
-    else:
+    if nextI == len(lst) or not len(lst[nextI]):
+        yield ans
+    else: 
         for nextSub in lst[nextI]:
-            yield from _aho_rec(list(ans).\
-                append((nextI, nextSub)), lst)
+            lst_copy = list(ans)
+            lst_copy.append((nextI, nextSub))
+            yield from _aho_rec(lst_copy, lst)
 
 def aho(word):
-    lst = [[]] * len(word)
+    lst = [[] for i in range(len(word))]
     for i, sub in aho_corrasick.find(morph_arr, word):
         lst[i].append(sub)
 
