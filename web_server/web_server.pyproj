@@ -46,6 +46,9 @@
     <Compile Include="sorting_2.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="state_machine.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="stem.py" />
     <Compile Include="stem_0.py" />
     <Compile Include="stem_1.py" />
@@ -55,10 +58,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="stem_flex_arr.py" />
-    <Compile Include="unittest2_aho_rec.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Unittests.py" />
+    <Compile Include="unittest_aho_rec.py" />
+    <Compile Include="unittest_aho_rec2.py" />
     <Compile Include="unittest_lemmatizer.py">
       <SubType>Code</SubType>
     </Compile>
