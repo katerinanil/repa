@@ -1,11 +1,11 @@
 from string_algorithms import aho_corrasick, naive_find
 
-morph_arr = ('a','b','cde','ab','abc')
-
 def _aho_rec(ans, lst):
-    i = ans[-1][0]
-    sub = ans[-1][1]
-    nextI = i + len(sub)
+    i = ans[-1][0] #first element of last taken tuple
+    sub = ans[-1][1] #2nd element of last taken tuple
+    nextI = i + len(sub) #index of next substring
+    """in case we got full combo or made our best
+    we return them, otherwise we continue making combos"""
     if nextI == len(lst) or not len(lst[nextI]):
         yield ans
     else: 
@@ -15,15 +15,17 @@ def _aho_rec(ans, lst):
             yield from _aho_rec(lst_copy, lst)
 
 def aho(morph_arr, word):
+    """make the list of lists which equal to the number of letters
+    and append substrings returned by aho to the related list"""
     lst = [[] for i in range(len(word))]
-    for i, sub in aho_corrasick.find(('мам','ами','мама','ми','и','ам','а','ма','м'), word):
+    for i, sub in aho_corrasick.find(morph_arr, word):
         lst[i].append(sub)
-
+    """here we get the algorithm started"""
     for sub in lst[0]:
         yield from _aho_rec([(0, sub)], lst)
 
 
 if __name__ == '__main__':
-    for ans in aho(morph_arr, 'мама'):
+    for ans in aho(('a','b','cde','ab','abc', 'мам','ами','мама','ми','и','ам','а','ма','м'), 'мама'):
         print(ans)
     pass
