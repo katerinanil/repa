@@ -1,4 +1,5 @@
-from string_algorithms import aho_corrasick, naive_find
+from itertools import product
+from aho_rec import aho
 
 class MorphSM:
     Start = 0
@@ -10,6 +11,17 @@ class MorphSM:
     Ps = 6
     End = 7
     Fail = 8
+    StateNames = {
+                    Start : 'Start',
+                    Pr : 'Pr',
+                    R : 'R',
+                    I : 'I',
+                    S : 'S',
+                    F : 'F',
+                    Ps : 'Ps',
+                    End : 'End',
+                    Fail : 'Fail'
+                 }
     Graph = {
                 Start : { Pr, R },
                 Pr : { Pr, R },
@@ -19,11 +31,23 @@ class MorphSM:
                 F : { Ps, End },
                 Ps : { End },
             }
-    def __init__(self, sub, morphs):
+    @staticmethod
+    def check(path):
+        curr = MorphSM.Start
+        for t in path:
+            if t in MorphSM.Graph[curr]:
+                curr = t
+        else: return True
+        return False
 
-        return super().__init__(**kwargs)
+morphs = { 'a' : {MorphSM.Pr}, 'b' : {MorphSM.R, MorphSM.S}, 'c' : {MorphSM.Ps} }
 
-    #@staticmethod
-    #def can_move(
-
-#morphs = {'a' : }
+if __name__ == '__main__':
+    for ans in aho(morphs.keys(), 'abc'):
+        lst = [morphs[sub] for i, sub in ans]
+        ps = product(*lst)
+        for p in ps:
+            if MorphSM.check(p):
+                for i in range(len(ans)):
+                    print(ans[i][0], ans[i][1], MorphSM.StateNames[p[i]], ', ', end='')
+                print()

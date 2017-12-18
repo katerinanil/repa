@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4a125c2e-15e9-4e94-9b7a-b364fbccbbae}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>aho_rec.py</StartupFile>
+    <StartupFile>state_machine.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
