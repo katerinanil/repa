@@ -14,7 +14,7 @@ def _aho_rec(ans, lst):
             lst_copy.append((nextI, nextSub))
             yield from _aho_rec(lst_copy, lst)
 
-def aho(morph_arr, word):
+def aho(word, morph_arr):
     """make the list of lists which equal to the number of letters
     and append substrings returned by aho to the related list"""
     lst = [[] for i in range(len(word))]
@@ -26,6 +26,6 @@ def aho(morph_arr, word):
 
 
 if __name__ == '__main__':
-    for ans in aho(('a','b','cde','ab','abc', 'мам','ами','мама','ми','и','ам','а','ма','м'), 'мама'):
+    for ans in aho('мама', ('a','b','cde','ab','abc', 'мам','ами','мама','ми','и','ам','а','ма','м')):
         print(ans)
     pass
