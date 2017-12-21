@@ -18,9 +18,9 @@ class MorphSM:
                 Pr : { Pr, R },
                 R : { I, Si, So, F, End },
                 I : { Pr, R },
-                Si : { Si, F, End },
+                Si : { Si, F, End },        #without
                 So : { Si, So, F, End },
-                F : { Ps, End },
+                F : { Ps, End },            #without
                 Ps : { End },
             }
     
@@ -34,11 +34,12 @@ class MorphSM:
             else: return False
         return True
 
-morphs = { 'по' : {MorphSM.Pr, MorphSM.R}, 'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F}, 'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
-           'вш' : {MorphSM.R, MorphSM.Si}, 'ий' : {MorphSM.F}, 'ся' : {MorphSM.Ps} }
+morphs = { 'по' : {MorphSM.Pr, MorphSM.R}, 'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F},
+           'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F}, 'вш' : {MorphSM.R, MorphSM.Si},
+           'ий' : {MorphSM.F}, 'ся' : {MorphSM.Ps} }
 
 def getCombo(word, morphs):
-    #ans - com
+    #ans - combo
     for ans in aho(word, morphs.keys()):
         #list of sets of morph types for every morph in combo
         lst = [morphs[sub] for i, sub in ans]
@@ -48,7 +49,8 @@ def getCombo(word, morphs):
             if MorphSM.check(p):
                 st = ''
                 for i in range(len(ans)):
-                    st += ans[i][1] + ' ' + p[i] + ', '
+                    if p[i] != MorphSM.Si and p[i] != MorphSM.F:
+                        st += ans[i][1]
                 yield st
 
 if __name__ == '__main__':

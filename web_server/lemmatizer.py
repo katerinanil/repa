@@ -1,5 +1,6 @@
 import shelve
 import config
+from state_machine import morphs, getCombo
 import stem_2_1
 
 class lemmatizer():
@@ -24,10 +25,17 @@ class lemmatizer():
             if stem in self.db_stems and flex in self.db_flex:
                 for t in self.db_stems[stem].keys() & self.db_flex[flex]:
                     lemmas.add(self.db_stems[stem][t])
-            if lemmas:
-                flag = False
+            if lemmas: flag = False
             for l in lemmas: yield l
         """returning to the previous algorithm if this one failed"""
         if flag:
-            yield from stem_2_1.stemmer(query)
-        #else: print("New algorithm is on duty")
+            flag = True
+            for stem in getCombo(query, morphs):
+                if stem != '': flag = False; yield stem
+            if flag:
+                print('STEMMA')
+                yield from stem_2_1.stemmer(query)
+            else:
+                print('MACHINA')
+        else:
+            print('LEMMA')
