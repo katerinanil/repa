@@ -6,20 +6,26 @@ class MorphSM:
     Pr = 'Pr'
     R = 'R'
     I = 'I'
-    S = 'S'
+    Si = 'Si'
+    So = 'So'
     F = 'F'
     Ps = 'Ps'
     End = 'End'
+    
+    #rule dict
     Graph = {
                 Start : { Pr, R },
                 Pr : { Pr, R },
-                R : { I, S, F, End },
+                R : { I, Si, So, F, End },
                 I : { Pr, R },
-                S : { S, F, End },
+                Si : { Si, F, End },
+                So : { Si, So, F, End },
                 F : { Ps, End },
                 Ps : { End },
             }
-    @staticmethod
+    
+    """making acceptable combos
+    according to rule dict"""
     def check(path):
         curr = MorphSM.Start
         for t in path:
@@ -28,10 +34,11 @@ class MorphSM:
             else: return False
         return True
 
-morphs = { 'po' : {MorphSM.Pr, MorphSM.R}, 'na' : {MorphSM.Pr}, 'smotr' : {MorphSM.R}, 'e' : {MorphSM.S, MorphSM.F},
-           'vsh' : {MorphSM.R, MorphSM.S}, 'iy' : {MorphSM.F}, 'sya' : {MorphSM.Ps} }
+morphs = { 'по' : {MorphSM.Pr, MorphSM.R}, 'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F}, 'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
+           'вш' : {MorphSM.R, MorphSM.Si}, 'ий' : {MorphSM.F}, 'ся' : {MorphSM.Ps} }
 
-def making_combo(word, morphs):
+def getCombo(word, morphs):
+    #ans - com
     for ans in aho(word, morphs.keys()):
         #list of sets of morph types for every morph in combo
         lst = [morphs[sub] for i, sub in ans]
@@ -45,6 +52,5 @@ def making_combo(word, morphs):
                 yield st
 
 if __name__ == '__main__':
-    for c in making_combo('ponasmotrevshiysya', morphs):
+    for c in getCombo('понасмотревшийся', morphs):
         print(c)
-    
