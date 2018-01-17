@@ -37,7 +37,7 @@ class MorphSM:
 morphs = { 'князь' : {MorphSM.R}, 'княз' : {MorphSM.R},'я' : {MorphSM.F},
            'ю' : {MorphSM.F},'ями' : {MorphSM.F},'под' : {MorphSM.Pr},
            'при' : {MorphSM.Pr},'ех' : {MorphSM.R},'а' : {MorphSM.So, MorphSM.F},
-           'л' : {MorphSM.So}, 'по' : {MorphSM.Pr, MorphSM.R},
+           'л' : {MorphSM.Si}, 'по' : {MorphSM.Pr, MorphSM.R},
            'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F},
            'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
            'вш' : {MorphSM.R, MorphSM.Si},'ий' : {MorphSM.F},

@@ -3,29 +3,26 @@ import unittest
 
 class AhoCase(unittest.TestCase):
     def test_combo0(self):
-        test_morphs = { 'мам' : {MorphSM.R}, 'а' : {MorphSM.S, MorphSM.F}, 'ми' : {MorphSM.F}, 'ами' : {MorphSM.F},
-           'и' : {MorphSM.F, MorphSM.S}}
+        test_morphs = { 'мам' : {MorphSM.R}, 'а' : {MorphSM.So, MorphSM.F}, 'ми' : {MorphSM.F}, 'ами' : {MorphSM.F},
+           'и' : {MorphSM.F, MorphSM.So}}
         test_word = 'мамами'
-        ass = ['мам R, а S, ми F, ', 'мам R, ами F, ']
+        ass = ['мам', 'мама']
         res = sorted(list(getCombo(test_word, test_morphs)))
         self.assertEqual(res, ass)
 
     def test_combo1(self):
-        test_morphs = { 'пере' : {MorphSM.Pr}, 'бег' : {MorphSM.R}, 'а' : {MorphSM.F, MorphSM.S}, 'л' : {MorphSM.S},
-           'и' : {MorphSM.F, MorphSM.S}, 'е' : {MorphSM.F, MorphSM.S, MorphSM.I}, 'пер' : {MorphSM.R}, 'гал' : {MorphSM.R}}
+        test_morphs = { 'пере' : {MorphSM.Pr}, 'бег' : {MorphSM.R}, 'а' : {MorphSM.F, MorphSM.So}, 'л' : {MorphSM.So},
+           'и' : {MorphSM.F, MorphSM.So}, 'е' : {MorphSM.F, MorphSM.So, MorphSM.I}, 'пер' : {MorphSM.R}, 'гал' : {MorphSM.R}}
         test_word = 'перебегали'
-        ass = ['пер R, е I, бег R, а S, л S, и F, ',
-               'пер R, е I, бег R, а S, л S, и S, ',
-               'пере Pr, бег R, а S, л S, и F, ',
-               'пере Pr, бег R, а S, л S, и S, ']
+        ass = ['перебегал', 'перебегал', 'перебегали', 'перебегали']
         res = sorted(list(getCombo(test_word, test_morphs)))
         self.assertEqual(res, ass)
         
     def test_combo2(self):
-        test_morphs = { 'каракатиц' : {MorphSM.R}, 'а' : {MorphSM.S, MorphSM.F}, 'кар' : {MorphSM.R}, 'кат' : {MorphSM.R},
-           'и' : {MorphSM.F, MorphSM.S}, 'иц' : {MorphSM.S}}
+        test_morphs = { 'каракатиц' : {MorphSM.R}, 'а' : {MorphSM.So, MorphSM.F}, 'кар' : {MorphSM.R}, 'кат' : {MorphSM.R},
+           'и' : {MorphSM.F, MorphSM.So}, 'иц' : {MorphSM.So}}
         test_word = 'каракатица'
-        ass = ['каракатиц R, а F, ', 'каракатиц R, а S, ']
+        ass = ['каракатиц', 'каракатица']
         res = sorted(list(getCombo(test_word, test_morphs)))
         self.assertEqual(res, ass)
 

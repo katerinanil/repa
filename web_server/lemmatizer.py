@@ -31,11 +31,13 @@ class lemmatizer():
         if flag:
             flag = True
             for stem in getCombo(query, morphs):
-                if stem != '': flag = False; yield stem
+                if stem != '':
+                    flag = False
+                    yield stem
             if flag:
                 print('STEMMA')
                 yield from stem_2_1.stemmer(query)
             else:
-                print('MACHINA')
+                print('MACHINE')
         else:
             print('LEMMA')
