@@ -96,41 +96,45 @@ class myHandler(BaseHTTPRequestHandler):
             print('QQ =', myHandler.QUTES_COUNTS)
             qres = getQuery.query(inputWords, config.DATABASE_NAME,
                 myHandler.lemma, doc_count, doc_start, myHandler.QUTES_COUNTS)
+            #resDict - { 'path' : ( [ 'context' ], [ [ (stBoldWord_1 , endBoldWord_1), (stBoldWord_2 , endBoldWord_2) ] ] ) }
             resDict = getQuery.makeContexts(qres, myHandler.QUTES_COUNTS)
             myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
                 myHandler.QUTES_COUNTS.append((None, None))
-                result_line += r'<li>'  + '<b>' + path + '</b>' + r'<ul>'
+                #list for documents
+                result_line += r'<li>'  + r'<b>' + path + r'</b>' + r'<ul>'
                 tup = resDict[path]
                 for context, positions in zip(tup[0], tup[1]):
+                    #list for contexts
                     result_line += r'<li>'
                     result_line += context[:positions[0][0]]
                     for j in range(len(positions)-1):
                         pos = positions[j]
-                        result_line += '<b>'
+                        result_line += r'<b>'
                         result_line += context[pos[0]:pos[1]]
-                        result_line += '</b>'
+                        result_line += r'</b>'
                         result_line += context[pos[1]:positions[j+1][0]]
+                    #code for last bold word in context
                     last_pos = positions[-1]
-                    result_line += '<b>'
+                    result_line += r'<b>'
                     result_line += context[last_pos[0]:last_pos[1]]
-                    result_line += '</b>'
+                    result_line += r'</b>'
                     result_line += context[last_pos[1]:]
                     result_line += r'</li>'
                 result_line += r'</ul><p>'
-                result_line += '<b><i>&nbsp;&nbsp;Количество цитат:</b></i>&nbsp;&nbsp;'
+                result_line += r'<b><i>&nbsp;&nbsp;Количество цитат:</b></i>&nbsp;&nbsp;'
                 result_line += \
                     r'<input type="text" name="countQuote' + str(i) + r'">'
-                result_line += '<b><i>&nbsp;&nbsp;&nbsp;&nbsp;Начиная с:</b></i>&nbsp;&nbsp;'
+                result_line += r'<b><i>&nbsp;&nbsp;&nbsp;&nbsp;Начиная с:</b></i>&nbsp;&nbsp;'
                 result_line += \
                     r'<input type="text" name="startQuote' + str(i) + r'">'
                 result_line += r'</li></p>'
             if len(result_line) != 0:
                 result_line = r'<ol type="I">' + result_line + r'</ol>'
             else:
-                result_line = '<p>Ничего не найдено. Искать в Яндекс, Google, Mail.ru</p>'
+                result_line = r'<p>Ничего не найдено. Искать в Яндекс, Google, Mail.ru</p>'
         else:
-            result_line = '<p><p><p>Задан пустой поисковый запрос</p></p></p>'
+            result_line = r'<p><p><p>Задан пустой поисковый запрос</p></p></p>'
             inputWords = ''
         myHandler.LAST_QUERY = inputWords
         myHandler.LAST_DOC_COUNT = doc_count
