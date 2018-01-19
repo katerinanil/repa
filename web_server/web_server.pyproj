@@ -61,7 +61,7 @@
     <Compile Include="Unittests.py" />
     <Compile Include="unittest_aho_rec.py" />
     <Compile Include="unittest_aho_rec2.py" />
-    <Compile Include="unittest_context_lists.py">
+    <Compile Include="unittest_limit_offset.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="unittest_lemmatizer.py">

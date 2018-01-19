@@ -6,7 +6,7 @@ def _aho_rec(ans, lst):
     nextI = i + len(sub) #index of next substring
     """in case we got full combo or made our best
     we return them, otherwise we continue making combos"""
-    if nextI == len(lst) or not len(lst[nextI]):
+    if nextI == len(lst):# or not len(lst[nextI]):
         yield ans
     else: 
         for nextSub in lst[nextI]:

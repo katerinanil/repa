@@ -40,10 +40,10 @@ morphs = { 'князь' : {MorphSM.R}, 'княз' : {MorphSM.R},'я' : {MorphSM.
            'л' : {MorphSM.Si}, 'по' : {MorphSM.Pr, MorphSM.R},
            'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F},
            'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
-           'вш' : {MorphSM.R, MorphSM.Si},'ий' : {MorphSM.F},
-           'ся' : {MorphSM.Ps},'на' : {MorphSM.R},'по' : {MorphSM.R},
-           'над' : {MorphSM.R},'в' : {MorphSM.R},'ех' : {MorphSM.R},
-           'из' : {MorphSM.R},'под' : {MorphSM.R} }
+           'вш' : {MorphSM.R, MorphSM.Si}, 'ий' : {MorphSM.F},
+           'ся' : {MorphSM.Ps}, 'на' : {MorphSM.R}, 'по' : {MorphSM.R},
+           'над' : {MorphSM.R}, 'в' : {MorphSM.R}, 'ех' : {MorphSM.R},
+           'из' : {MorphSM.R}, 'под' : {MorphSM.R} }
 
 
 def getCombo(word, morphs):

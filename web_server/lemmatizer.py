@@ -29,7 +29,6 @@ class lemmatizer():
             for l in lemmas: yield l
         """returning to the previous algorithm if this one failed"""
         if flag:
-            flag = True
             for stem in getCombo(query, morphs):
                 if stem != '':
                     flag = False
