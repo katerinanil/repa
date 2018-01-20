@@ -10,17 +10,19 @@ class MorphSM:
     So = 'So'
     F = 'F'
     Ps = 'Ps'
+    Zf = 'Zf'
     End = 'End'
     
     #rule dict
     Graph = {
                 Start : { Pr, R },
                 Pr : { Pr, R },
-                R : { I, Si, So, F, End },
+                R : { I, Si, So, F, Zf, End },
                 I : { Pr, R },
-                Si : { Si, F, End },        #without
-                So : { Si, So, F, End },
-                F : { Ps, End },            #without
+                Si : { Si, F, Zf, End },        #without
+                So : { Si, So, F, Zf, End },
+                F : { Ps, End },                #without
+                Zf : { Ps, End },
                 Ps : { End },
             }
     
@@ -33,18 +35,6 @@ class MorphSM:
                 curr = t
             else: return False
         return True
-
-morphs = { 'князь' : {MorphSM.R}, 'княз' : {MorphSM.R},'я' : {MorphSM.F},
-           'ю' : {MorphSM.F},'ями' : {MorphSM.F},'под' : {MorphSM.Pr},
-           'при' : {MorphSM.Pr},'ех' : {MorphSM.R},'а' : {MorphSM.So, MorphSM.F},
-           'л' : {MorphSM.Si}, 'по' : {MorphSM.Pr, MorphSM.R},
-           'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F},
-           'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
-           'вш' : {MorphSM.R, MorphSM.Si}, 'ий' : {MorphSM.F},
-           'ся' : {MorphSM.Ps}, 'на' : {MorphSM.R}, 'по' : {MorphSM.R},
-           'над' : {MorphSM.R}, 'в' : {MorphSM.R}, 'ех' : {MorphSM.R},
-           'из' : {MorphSM.R}, 'под' : {MorphSM.R} }
-
 
 def getCombo(word, morphs):
     #ans - combo
@@ -61,6 +51,6 @@ def getCombo(word, morphs):
                         st += ans[i][1]
                 yield st
 
-if __name__ == '__main__':
-    for c in getCombo('понасмотревшийся', morphs):
-        print(c)
+#if __name__ == '__main__':
+#    for c in getCombo('понасмотревшийся', morphs):
+#        print(c)
