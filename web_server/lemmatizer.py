@@ -1,7 +1,6 @@
 import shelve
 import config
-from state_machine import getCombo
-from morpharr import morphs
+from state_machine import getCombo, morphs
 import stem_2_1
 
 class lemmatizer():

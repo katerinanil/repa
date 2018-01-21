@@ -19,7 +19,6 @@ class MorphSM:
     
     #rule dict
     Graph = {
-<<<<<<< HEAD
                 Start : { Pr, R_n, R_v },
                 Pr : { Pr, R_n, R_v },
                 R_n : { I, Si, So_n, F_n, End },
@@ -33,17 +32,6 @@ class MorphSM:
                 F_a : { Ps, End },
                 Ps : { End }, #вспомнила тут еще нужно отразить идею того,
                             #что мы всегда должны приходить в энд (вот зачем он нужен)
-=======
-                Start : { Pr, R },
-                Pr : { Pr, R },
-                R : { I, Si, So, F, Zf, End },
-                I : { Pr, R },
-                Si : { Si, F, Zf, End },        #without
-                So : { Si, So, F, Zf, End },
-                F : { Ps, End },                #without
-                Zf : { Ps, End },
-                Ps : { End },
->>>>>>> cd8eab5d98584deca9ee09403855baf860ee5344
             }
     
     """making acceptable combos
@@ -56,7 +44,6 @@ class MorphSM:
             else: return False
         return True
 
-<<<<<<< HEAD
 morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {MorphSM.F_n},
            'ю' : {MorphSM.F_n},'ями' : {MorphSM.F_n},'под' : {MorphSM.Pr},
            'при' : {MorphSM.Pr},'ех' : {MorphSM.R_v},'л' : {MorphSM.Si},
@@ -70,8 +57,6 @@ morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {Morp
            'и' : {MorphSM.F_n, MorphSM.F_v, MorphSM.So_v,}}
 
 
-=======
->>>>>>> cd8eab5d98584deca9ee09403855baf860ee5344
 def getCombo(word, morphs):
     #ans - combo
     for ans in aho(word, morphs.keys()):
@@ -86,13 +71,7 @@ def getCombo(word, morphs):
                     if p[i] not in {MorphSM.Si, MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
                         st += ans[i][1]
                 yield st
-
-<<<<<<< HEAD
+                
 if __name__ == '__main__':
     for c in getCombo('мамами', morphs):
         print(c)
-=======
-#if __name__ == '__main__':
-#    for c in getCombo('понасмотревшийся', morphs):
-#        print(c)
->>>>>>> cd8eab5d98584deca9ee09403855baf860ee5344
