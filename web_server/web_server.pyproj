@@ -42,6 +42,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="makeDB.py" />
+    <Compile Include="morpharr.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="sorting.py" />
     <Compile Include="sorting_2.py">
       <SubType>Code</SubType>
