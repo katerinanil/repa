@@ -36,6 +36,7 @@ class MorphSM:
     
     """making acceptable combos
     according to rule dict"""
+    @staticmethod
     def check(path):
         curr = MorphSM.Start
         for t in path:

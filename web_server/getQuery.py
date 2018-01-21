@@ -92,6 +92,7 @@ def makeContexts(d, pairs=None):
 		f = open(path)
 		text = f.read()
 		f.close()
+		doc_pos = []
 		for st, end in d[path]:
 			new_st = st
 			#Добавляем левый контекст
@@ -113,8 +114,15 @@ def makeContexts(d, pairs=None):
 			#Объединяем контексты
 			context = text[new_st:new_end]
 			if not context in contexts:
-				contexts.append(context)
-				positions.append([(st - new_st, end - new_st)])
+				insI = 0
+                #find corresponding index in doc_pos in ascending order
+				if len(doc_pos) != 0:
+					for pos in doc_pos:
+						if pos < st: insI += 1
+						else: break
+				doc_pos.insert(insI, st)
+				contexts.insert(insI, context)
+				positions.insert(insI, [(st - new_st, end - new_st)])
 			else:
 				conI = contexts.index(context)
 				positions[conI].append((st - new_st, end - new_st))
