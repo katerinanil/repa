@@ -4,24 +4,33 @@ from aho_rec import aho
 class MorphSM:
     Start = 'Start'
     Pr = 'Pr'
-    R = 'R'
+    R_n = 'R_n'
+    R_v = 'R_v'
     I = 'I'
     Si = 'Si'
-    So = 'So'
-    F = 'F'
+    So_v = 'So_v'
+    So_n = 'So_n'
+    F_a = 'F_a'
+    F_v = 'F_v'
+    F_n = 'F_n'
     Ps = 'Ps'
     End = 'End'
     
     #rule dict
     Graph = {
-                Start : { Pr, R },
-                Pr : { Pr, R },
-                R : { I, Si, So, F, End },
-                I : { Pr, R },
-                Si : { Si, F, End },        #without
-                So : { Si, So, F, End },
-                F : { Ps, End },            #without
-                Ps : { End },
+                Start : { Pr, R_n, R_v },
+                Pr : { Pr, R_n, R_v },
+                R_n : { I, Si, So_n, F_n, End },
+                R_v : { I, Si, So_v, F_v, End },
+                I : { Pr, R_n, R_v },
+                Si : { Si, F_n, F_v, F_a, End },
+                So_v : { Si, So_v, F_v, End },
+                So_n : { Si, So_n, F_n, End },
+                F_n : { Ps, End },
+                F_v : { Ps, End },
+                F_a : { Ps, End },
+                Ps : { End }, #вспомнила тут еще нужно отразить идею того,
+                            #что мы всегда должны приходить в энд (вот зачем он нужен)
             }
     
     """making acceptable combos
@@ -34,16 +43,17 @@ class MorphSM:
             else: return False
         return True
 
-morphs = { 'князь' : {MorphSM.R}, 'княз' : {MorphSM.R},'я' : {MorphSM.F},
-           'ю' : {MorphSM.F},'ями' : {MorphSM.F},'под' : {MorphSM.Pr},
-           'при' : {MorphSM.Pr},'ех' : {MorphSM.R},'а' : {MorphSM.So, MorphSM.F},
-           'л' : {MorphSM.Si}, 'по' : {MorphSM.Pr, MorphSM.R},
-           'на' : {MorphSM.Pr}, 'а' : {MorphSM.So, MorphSM.F},
-           'смотр' : {MorphSM.R}, 'е' : {MorphSM.So, MorphSM.F},
-           'вш' : {MorphSM.R, MorphSM.Si}, 'ий' : {MorphSM.F},
-           'ся' : {MorphSM.Ps}, 'на' : {MorphSM.R}, 'по' : {MorphSM.R},
-           'над' : {MorphSM.R}, 'в' : {MorphSM.R}, 'ех' : {MorphSM.R},
-           'из' : {MorphSM.R}, 'под' : {MorphSM.R} }
+morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {MorphSM.F_n},
+           'ю' : {MorphSM.F_n},'ями' : {MorphSM.F_n},'под' : {MorphSM.Pr},
+           'при' : {MorphSM.Pr},'ех' : {MorphSM.R_v},'л' : {MorphSM.Si},
+           'по' : {MorphSM.Pr},'на' : {MorphSM.Pr}, 'а' : {MorphSM.So_v, MorphSM.F_n, MorphSM.F_v},
+           'смотр' : {MorphSM.R_n, MorphSM.R_v}, 'е' : {MorphSM.So_v, MorphSM.F_n},
+           'вш' : {MorphSM.R_n, MorphSM.Si}, 'ий' : {MorphSM.F_a},
+           'ся' : {MorphSM.Ps}, 'на' : {MorphSM.Pr}, 'по' : {MorphSM.Pr},
+           'над' : {MorphSM.Pr}, 'в' : {MorphSM.Pr}, 'ех' : {MorphSM.R_v},
+           'из' : {MorphSM.Pr}, 'под' : {MorphSM.Pr}, 'мам' : {MorphSM.R_n},
+           'ами' : {MorphSM.F_n}, 'ам' : {MorphSM.F_n},'ми' : {MorphSM.R_n, MorphSM.F_n,},
+           'и' : {MorphSM.F_n, MorphSM.F_v, MorphSM.So_v,}}
 
 
 def getCombo(word, morphs):
@@ -57,10 +67,10 @@ def getCombo(word, morphs):
             if MorphSM.check(p):
                 st = ''
                 for i in range(len(ans)):
-                    if p[i] != MorphSM.Si and p[i] != MorphSM.F:
+                    if p[i] not in {MorphSM.Si, MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
                         st += ans[i][1]
                 yield st
 
 if __name__ == '__main__':
-    for c in getCombo('понасмотревшийся', morphs):
+    for c in getCombo('мамами', morphs):
         print(c)
