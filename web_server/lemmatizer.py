@@ -1,6 +1,6 @@
 import shelve
 import config
-from state_machine import getCombo, morphs
+from state_machine import getStem, morphs
 import stem_2_1
 
 class lemmatizer():
@@ -29,7 +29,7 @@ class lemmatizer():
             for l in lemmas: yield l
         """returning to the previous algorithm if this one failed"""
         if flag:
-            for stem in getCombo(query, morphs):
+            for stem in getStem(query, morphs):
                 if stem != '':
                     flag = False
                     yield stem

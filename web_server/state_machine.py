@@ -6,6 +6,7 @@ class MorphSM:
     Pr = 'Pr'
     R_n = 'R_n'
     R_v = 'R_v'
+    R_c = 'R_c'
     I = 'I'
     Si = 'Si'
     So_v = 'So_v'
@@ -23,6 +24,7 @@ class MorphSM:
                 Pr : { Pr, R_n, R_v },
                 R_n : { I, Si, So_n, F_n, End },
                 R_v : { I, Si, So_v, F_v, End },
+                R_c : { End },
                 I : { Pr, R_n, R_v },
                 Si : { Si, F_n, F_v, F_a, End },
                 So_v : { Si, So_v, F_v, End },
@@ -30,8 +32,7 @@ class MorphSM:
                 F_n : { Ps, End },
                 F_v : { Ps, End },
                 F_a : { Ps, End },
-                Ps : { End },
-                            
+                Ps : { End },                
             }
     
     """making acceptable combos
@@ -48,7 +49,8 @@ class MorphSM:
 morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {MorphSM.F_n},
            'ю' : {MorphSM.F_n},'ями' : {MorphSM.F_n},'под' : {MorphSM.Pr},
            'при' : {MorphSM.Pr},'ех' : {MorphSM.R_v},'л' : {MorphSM.Si,},
-           'по' : {MorphSM.Pr},'на' : {MorphSM.Pr}, 'а' : {MorphSM.So_v, MorphSM.F_n, MorphSM.F_v},
+           'по' : {MorphSM.Pr},'на' : {MorphSM.Pr},
+           'а' : {MorphSM.R_c, MorphSM.So_v, MorphSM.F_n, MorphSM.F_v},
            'смотр' : {MorphSM.R_n, MorphSM.R_v}, 'е' : {MorphSM.So_v, MorphSM.F_n},
            'вш' : {MorphSM.R_n, MorphSM.Si}, 'ий' : {MorphSM.F_a},'ся' : {MorphSM.Ps},
            'на' : {MorphSM.Pr}, 'по' : {MorphSM.Pr}, 'над' : {MorphSM.Pr}, 'в' : {MorphSM.Pr},
@@ -57,8 +59,7 @@ morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {Morp
            'и' : {MorphSM.F_n, MorphSM.F_v, MorphSM.So_v,}, 'ть' : {MorphSM.F_v,}, 'ит' : {MorphSM.F_v,},
            'ишь' : {MorphSM.F_v,},'им' : {MorphSM.F_v,},'ите' : {MorphSM.F_v,},'ят' : {MorphSM.F_v,}}
 
-
-def getCombo(word, morphs):
+def _getCombo(word, morphs):
     #ans - combo
     for ans in aho(word, morphs.keys()):
         #list of sets of morph types for every morph in combo
@@ -66,13 +67,17 @@ def getCombo(word, morphs):
         #p is potentional path in graph
         for p in product(*lst):
             #if path is acceptable
-            if MorphSM.check(p):
-                st = ''
-                for i in range(len(ans)):
-                    if p[i] not in {MorphSM.Si, MorphSM.So_v, MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
-                        st += ans[i][1]
-                yield st
+            if MorphSM.check(p): yield ans, p
+
+def getStem(word, morphs):
+    for ans, p in _getCombo(word, morphs):
+        st = ''
+        for i in range(len(ans)):
+            if p[i] not in {MorphSM.Si, MorphSM.So_v, \
+                MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
+                st += ans[i][1]
+        yield st
                 
 if __name__ == '__main__':
-    for c in getCombo('мамами', morphs):
+    for c in getStem('мамами', morphs):
         print(c)

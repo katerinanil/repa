@@ -7,9 +7,9 @@ from lemmatizer import lemmatizer
 
 class myHandler(BaseHTTPRequestHandler):
     lemma = lemmatizer()
-    LAST_QUERY = ''
-    LAST_DOC_COUNT = ''
-    LAST_DOC_START = ''
+    QUERY = ''
+    DOC_COUNT = 2
+    DOC_START = 1
     QUTES_COUNTS = None
     HTML_DOC_1 = \
     '''
@@ -24,21 +24,16 @@ class myHandler(BaseHTTPRequestHandler):
     HTML_DOC_2 = \
     '''
     >
-                <input type="submit" value="&#128270;">&emsp;&emsp;&emsp;&emsp;&emsp;
-                <input type="submit" value="В начало">
-                <input type="submit" value="Назад">
-                <input type="submit" value="Только вперед!">
+                <input type="submit" name="search" value="&#128270;">&emsp;&emsp;&emsp;&emsp;&emsp;
+                <input type="submit" name="begin" value="В начало">
+                <input type="submit" name="back" value="Назад">
+                <input type="submit" name="forward" value="Вперед">
                 <input type="text" name="doc_count" value=
     '''
-    """HTML_DOC_3 = \
-    '''>
-                &nbsp;&nbsp;&nbsp;&nbsp;<b><i>Начиная с:</b></i>&nbsp;
-                <input type="text" name="doc_start" value=
-    '''"""
-    HTML_DOC_4 = \
-    '''>
+    HTML_DOC_3 = \
+    '''">
     '''
-    HTML_DOC_5 = \
+    HTML_DOC_4 = \
     """
             </form>
         </body>
@@ -50,8 +45,9 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
         self.wfile.write(
-            bytes(myHandler.HTML_DOC_1 + '""' + myHandler.HTML_DOC_2  + '""' + myHandler.HTML_DOC_4 +
-                myHandler.HTML_DOC_5, encoding='utf-8'))
+            bytes(myHandler.HTML_DOC_1 + '""' + myHandler.HTML_DOC_2  + \
+                '"' + str(myHandler.DOC_COUNT) + myHandler.HTML_DOC_3 +
+                myHandler.HTML_DOC_4, encoding='utf-8'))
     def do_POST(self):
         form = cgi.FieldStorage(
             fp=self.rfile, 
@@ -64,44 +60,55 @@ class myHandler(BaseHTTPRequestHandler):
 
         inputWords = form.getvalue('query').lower()
         doc_count = form.getvalue('doc_count')
-        doc_start = form.getvalue('doc_start')
         try:
             doc_count = int(doc_count)
-            if doc_count < 0: doc_count = -1
-        except: doc_count = -1
-        try:
-            doc_start = int(doc_start)
-            if doc_start <= 0: doc_start = -1
-        except: doc_start = -1
+            if doc_count < 0: doc_count = 2
+        except: doc_count = 2
+
+        if form.getvalue('begin'):
+            myHandler.DOC_START = 1
+        elif form.getvalue('back'):
+            sh = doc_count
+            if myHandler.DOC_START - sh < 1:
+                sh = myHandler.DOC_START - 1
+            myHandler.DOC_START -= sh
+        elif form.getfirst('forward'):
+            myHandler.DOC_START += doc_count
+
         result_line = ''
         if inputWords != None:
-            if myHandler.LAST_QUERY == inputWords and \
-               myHandler.LAST_DOC_COUNT == doc_count and \
-               myHandler.LAST_DOC_START == doc_start:
-                print('YES')
+            if myHandler.QUERY == inputWords and \
+               myHandler.DOC_COUNT == doc_count:
                 for i in range(len(myHandler.QUTES_COUNTS)):
                     countQuote = form.getvalue('countQuote' + str(i))
-                    #print('CQ =', countQuote, 'i =', i)
                     try: countQuote= int(countQuote)
-                    except: countQuote = None
-                    startQuote = form.getvalue('startQuote' + str(i))
-                    try: startQuote = int(startQuote)
-                    except: startQuote = None
-                    myHandler.QUTES_COUNTS[i] = (countQuote, startQuote)
+                    except: countQuote = 10
+                    if form.getvalue('beginQuote' + str(i)):
+                        myHandler.QUTES_COUNTS[i] = [countQuote, 0]
+                    elif form.getvalue('backQuote' + str(i)):
+                        sh = countQuote
+                        if myHandler.QUTES_COUNTS[i][1] - sh < 0:
+                            sh = mmyHandler.QUTES_COUNTS[i][1]
+                        myHandler.QUTES_COUNTS[i][1] -= sh
+                    elif form.getfirst('forwardQuote' + str(i)):
+                        myHandler.QUTES_COUNTS[i][1] += countQuote
+                    myHandler.QUTES_COUNTS[i][0] = countQuote
             else:
-                print('NO', 'LQ =', myHandler.LAST_QUERY, 'LDC =', \
-                       myHandler.LAST_DOC_COUNT, 'LDS =', \
-                       myHandler.LAST_DOC_START, 'Q =', inputWords, \
-                      'DC =', doc_count, 'DS =', doc_start)
-                myHandler.QUTES_COUNTS = None
-            print('QQ =', myHandler.QUTES_COUNTS)
+                myHandler.DOC_START = 1
+                myHandler.DOC_COUNT = 2
+                myHandler.QUERY = inputWords
+                myHandler.QUTES_COUNTS = []
+                for i in range(myHandler.DOC_COUNT):
+                    myHandler.QUTES_COUNTS.append([10, 0])
             qres = getQuery.query(inputWords, config.DATABASE_NAME,
-                myHandler.lemma, doc_count, doc_start, myHandler.QUTES_COUNTS)
+                myHandler.lemma, doc_count, myHandler.DOC_START, myHandler.QUTES_COUNTS)
             #resDict - { 'path' : ( [ 'context' ], [ [ (stBoldWord_1 , endBoldWord_1), (stBoldWord_2 , endBoldWord_2) ] ] ) }
             resDict = getQuery.makeContexts(qres, myHandler.QUTES_COUNTS)
-            myHandler.QUTES_COUNTS = []
+            
+            newQuotes = myHandler.QUTES_COUNTS == None
+            if newQuotes: myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
-                myHandler.QUTES_COUNTS.append((None, None))
+                if newQuotes: myHandler.QUTES_COUNTS.append([10, 0])
                 #list for documents
                 result_line += r'<li>'  + r'<b>' + path + r'</b>' + r'<ul>'
                 tup = resDict[path]
@@ -123,13 +130,12 @@ class myHandler(BaseHTTPRequestHandler):
                     result_line += context[last_pos[1]:]
                     result_line += r'</li>'
                 result_line += r'</ul><p>'
-                result_line += r'<b><i>&nbsp;&nbsp;Количество цитат:</b></i>&nbsp;&nbsp;'
-                result_line += \
-                    r'<input type="text" name="countQuote' + str(i) + r'">'
-                result_line += r'<b><i>&nbsp;&nbsp;&nbsp;&nbsp;Начиная с:</b></i>&nbsp;&nbsp;'
-                result_line += \
-                    r'<input type="text" name="startQuote' + str(i) + r'">'
-                result_line += r'</li></p>'
+                result_line += r'<input type="submit" name="beginQuote' + str(i) + '" value="В начало">'
+                result_line += r'<input type="submit" name="backQuote' + str(i) + '" value="Назад">'
+                result_line += r'<input type="submit" name="forwardQuote' + str(i) + '" value="Вперед">'
+                result_line += r'<input type="text" name="countQuote' + str(i) + r'" value="'
+                countQuote = myHandler.QUTES_COUNTS[i][0]
+                result_line += str(countQuote) + r'"></li></p>'
             if len(result_line) != 0:
                 result_line = r'<ol type="I">' + result_line + r'</ol>'
             else:
@@ -137,18 +143,13 @@ class myHandler(BaseHTTPRequestHandler):
         else:
             result_line = r'<p><p><p>Задан пустой поисковый запрос</p></p></p>'
             inputWords = ''
-        myHandler.LAST_QUERY = inputWords
-        myHandler.LAST_DOC_COUNT = doc_count
-        myHandler.LAST_DOC_START = doc_start
-        if doc_count == -1: doc_count = ''
-        else: doc_count = str(doc_count)
-        if doc_start == -1: doc_start = ''
+        myHandler.QUERY = inputWords
+        myHandler.DOC_COUNT = doc_count
         self.wfile.write(
-            bytes(myHandler.HTML_DOC_1 + '"' + inputWords + '"' +
-                  myHandler.HTML_DOC_2 + '"' + str(doc_count) + '"' +
-                  str(doc_start) + '"' +
-                  myHandler.HTML_DOC_4 + result_line +
-                  myHandler.HTML_DOC_5, encoding = 'utf-8'))
+            bytes(myHandler.HTML_DOC_1 + '"' + myHandler.QUERY + '"' +
+                  myHandler.HTML_DOC_2 + '"' + str(myHandler.DOC_COUNT) +
+                  myHandler.HTML_DOC_3 + result_line +
+                  myHandler.HTML_DOC_4, encoding = 'utf-8'))
 
 try:
     PORT_NUMBER = 8080
