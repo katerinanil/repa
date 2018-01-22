@@ -30,8 +30,8 @@ class MorphSM:
                 F_n : { Ps, End },
                 F_v : { Ps, End },
                 F_a : { Ps, End },
-                Ps : { End }, #вспомнила тут еще нужно отразить идею того,
-                            #что мы всегда должны приходить в энд (вот зачем он нужен)
+                Ps : { End },
+                            
             }
     
     """making acceptable combos
@@ -47,15 +47,15 @@ class MorphSM:
 
 morphs = { 'князь' : {MorphSM.R_n}, 'княз' : {MorphSM.R_n},'я' : {MorphSM.F_n},
            'ю' : {MorphSM.F_n},'ями' : {MorphSM.F_n},'под' : {MorphSM.Pr},
-           'при' : {MorphSM.Pr},'ех' : {MorphSM.R_v},'л' : {MorphSM.Si},
+           'при' : {MorphSM.Pr},'ех' : {MorphSM.R_v},'л' : {MorphSM.Si,},
            'по' : {MorphSM.Pr},'на' : {MorphSM.Pr}, 'а' : {MorphSM.So_v, MorphSM.F_n, MorphSM.F_v},
            'смотр' : {MorphSM.R_n, MorphSM.R_v}, 'е' : {MorphSM.So_v, MorphSM.F_n},
-           'вш' : {MorphSM.R_n, MorphSM.Si}, 'ий' : {MorphSM.F_a},
-           'ся' : {MorphSM.Ps}, 'на' : {MorphSM.Pr}, 'по' : {MorphSM.Pr},
-           'над' : {MorphSM.Pr}, 'в' : {MorphSM.Pr}, 'ех' : {MorphSM.R_v},
-           'из' : {MorphSM.Pr}, 'под' : {MorphSM.Pr}, 'мам' : {MorphSM.R_n},
+           'вш' : {MorphSM.R_n, MorphSM.Si}, 'ий' : {MorphSM.F_a},'ся' : {MorphSM.Ps},
+           'на' : {MorphSM.Pr}, 'по' : {MorphSM.Pr}, 'над' : {MorphSM.Pr}, 'в' : {MorphSM.Pr},
+           'ех' : {MorphSM.R_v},'из' : {MorphSM.Pr}, 'под' : {MorphSM.Pr}, 'мам' : {MorphSM.R_n},
            'ами' : {MorphSM.F_n}, 'ам' : {MorphSM.F_n},'ми' : {MorphSM.R_n, MorphSM.F_n,},
-           'и' : {MorphSM.F_n, MorphSM.F_v, MorphSM.So_v,}}
+           'и' : {MorphSM.F_n, MorphSM.F_v, MorphSM.So_v,}, 'ть' : {MorphSM.F_v,}, 'ит' : {MorphSM.F_v,},
+           'ишь' : {MorphSM.F_v,},'им' : {MorphSM.F_v,},'ите' : {MorphSM.F_v,},'ят' : {MorphSM.F_v,}}
 
 
 def getCombo(word, morphs):
@@ -69,7 +69,7 @@ def getCombo(word, morphs):
             if MorphSM.check(p):
                 st = ''
                 for i in range(len(ans)):
-                    if p[i] not in {MorphSM.Si, MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
+                    if p[i] not in {MorphSM.Si, MorphSM.So_v, MorphSM.F_v, MorphSM.F_n, MorphSM.F_a}:
                         st += ans[i][1]
                 yield st
                 

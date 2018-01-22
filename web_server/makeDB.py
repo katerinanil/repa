@@ -42,5 +42,6 @@ def makeDB(files, dbname):
     db.close()
 
 if __name__ == '__main__':
-    #makeDB(['ViM Part 1.txt', 'ViM Part 2.txt', 'ViM Part 3.txt', 'ViM Part 4.txt'], config.DATABASE_NAME)
-    makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME)
+    makeDB(['ViM Part 1.txt', 'ViM Part 2.txt', 'ViM Part 3.txt', 'ViM Part 4.txt'], config.DATABASE_NAME)
+    #makeDB(['mid_text_1.txt', 'mid_text_2.txt'], config.DATABASE_NAME)
+    #makeDB(['WarAndPeace1.txt', 'WarAndPeace2.txt', 'WarAndPeace3.txt', 'WarAndPeace4.txt'], config.DATABASE_NAME)

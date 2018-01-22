@@ -24,15 +24,17 @@ class myHandler(BaseHTTPRequestHandler):
     HTML_DOC_2 = \
     '''
     >
-                <input type="submit" value="Go!">
-                &nbsp;&nbsp;&nbsp;&nbsp;<b><i>Искать в документах:</b></i>&nbsp;
+                <input type="submit" value="&#128270;">&emsp;&emsp;&emsp;&emsp;&emsp;
+                <input type="submit" value="В начало">
+                <input type="submit" value="Назад">
+                <input type="submit" value="Только вперед!">
                 <input type="text" name="doc_count" value=
     '''
-    HTML_DOC_3 = \
+    """HTML_DOC_3 = \
     '''>
                 &nbsp;&nbsp;&nbsp;&nbsp;<b><i>Начиная с:</b></i>&nbsp;
                 <input type="text" name="doc_start" value=
-    '''
+    '''"""
     HTML_DOC_4 = \
     '''>
     '''
@@ -48,8 +50,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
         self.wfile.write(
-            bytes(myHandler.HTML_DOC_1 + '""' + myHandler.HTML_DOC_2 + '""' +
-                myHandler.HTML_DOC_3 + '""' + myHandler.HTML_DOC_4 +
+            bytes(myHandler.HTML_DOC_1 + '""' + myHandler.HTML_DOC_2  + '""' + myHandler.HTML_DOC_4 +
                 myHandler.HTML_DOC_5, encoding='utf-8'))
     def do_POST(self):
         form = cgi.FieldStorage(
@@ -145,7 +146,7 @@ class myHandler(BaseHTTPRequestHandler):
         self.wfile.write(
             bytes(myHandler.HTML_DOC_1 + '"' + inputWords + '"' +
                   myHandler.HTML_DOC_2 + '"' + str(doc_count) + '"' +
-                  myHandler.HTML_DOC_3 + '"' + str(doc_start) + '"' +
+                  str(doc_start) + '"' +
                   myHandler.HTML_DOC_4 + result_line +
                   myHandler.HTML_DOC_5, encoding = 'utf-8'))
 
