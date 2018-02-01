@@ -7,6 +7,7 @@ class Item:
 class DB:
     db = []
     db.append(Item('марсианин', '10:00', '150'))
+    db.append(Item('марсианин', '12:00', '150'))
     db.append(Item('игра', '13:00', '150'))
     db.append(Item('интерстеллар', '15:00', '250'))
     db.append(Item('экзамен', '16:00', '300'))
@@ -17,8 +18,6 @@ class DB:
     db.append(Item('иллюзионист', '21:00', '280'))
     db.append(Item('подмена', '22:00', '250'))
     
-    
-
     @staticmethod
     def add(film, time, cost):
         self.db.append(Item(film, time, cost))
