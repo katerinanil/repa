@@ -99,7 +99,7 @@ class myHandler(BaseHTTPRequestHandler):
                 myHandler.QUERY = inputWords
                 myHandler.QUTES_COUNTS = []
                 for i in range(myHandler.DOC_COUNT):
-                    myHandler.QUTES_COUNTS.append([10, 0])
+                    myHandler.QUTES_COUNTS.append([5, 0])
             qres = getQuery.query(inputWords, config.DATABASE_NAME,
                 myHandler.lemma, doc_count, myHandler.DOC_START, myHandler.QUTES_COUNTS)
             #resDict - { 'path' : ( [ 'context' ], [ [ (stBoldWord_1 , endBoldWord_1), (stBoldWord_2 , endBoldWord_2) ] ] ) }
@@ -108,7 +108,7 @@ class myHandler(BaseHTTPRequestHandler):
             newQuotes = myHandler.QUTES_COUNTS == None
             if newQuotes: myHandler.QUTES_COUNTS = []
             for i, path in enumerate(resDict):
-                if newQuotes: myHandler.QUTES_COUNTS.append([10, 0])
+                if newQuotes: myHandler.QUTES_COUNTS.append([5, 0])
                 #list for documents
                 result_line += r'<li>'  + r'<b>' + path + r'</b>' + r'<ul>'
                 tup = resDict[path]
@@ -130,9 +130,9 @@ class myHandler(BaseHTTPRequestHandler):
                     result_line += context[last_pos[1]:]
                     result_line += r'</li>'
                 result_line += r'</ul><p>'
-                result_line += r'<input type="submit" name="beginQuote' + str(i) + '" value="В начало">'
-                result_line += r'<input type="submit" name="backQuote' + str(i) + '" value="Назад">'
-                result_line += r'<input type="submit" name="forwardQuote' + str(i) + '" value="Вперед">'
+                result_line += r'<input type="submit" name="beginQuote' + str(i) + '" value="В начало">&nbsp;'
+                result_line += r'<input type="submit" name="backQuote' + str(i) + '" value="Назад">&nbsp;'
+                result_line += r'<input type="submit" name="forwardQuote' + str(i) + '" value="Вперед">&nbsp;'
                 result_line += r'<input type="text" name="countQuote' + str(i) + r'" value="'
                 countQuote = myHandler.QUTES_COUNTS[i][0]
                 result_line += str(countQuote) + r'"></li></p>'
