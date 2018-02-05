@@ -39,7 +39,7 @@ class Dealer:
                     if self.film != None and not\
                        Dealer._checkTimeByFilm(self.film, self.time):
                         self.film = None
-                        print('К сожалению, у данного фильма нет старта в' + self.time + '. Выберете другое время?')
+                        print('К сожалению, у данного фильма нет старта в' + self.time)
                 else:
                     film = Dealer._getFilmName(msg)
                     if film != None: self.film = film
