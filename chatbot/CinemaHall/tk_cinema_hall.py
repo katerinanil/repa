@@ -11,7 +11,7 @@ row_name = 10
 
 li = ["grey", "indigo"]
 def color(event):
-     but.configure(bg=li[0])
+     event.widget.configure(bg=li[0])
      li[0],li[1] = li[1],li[0]
      #li[0] = li[1]
      #li[1] = li[0]
@@ -27,8 +27,9 @@ Button(root, text = "VIP 3 (500р)",  background="cyan3",
 for x in range(1, 11):
     for z in range(1, 11):
         label1 = Label( root, text = "ряд "+str(row_name)).grid(row = x, column = 0)
-        but2 = Button(root, text = str(seat_name) + " (250р)",  background="royalblue",
-               foreground="white",).grid(row = x, column = z, ipadx = 4, ipady = 2, padx = 2, pady = 2)
+        but2 = Button(root, text = str(seat_name) + " (250р)",  background="royalblue", foreground="white")
+        but2.grid(row = x, column = z, ipadx = 4, ipady = 2, padx = 2, pady = 2)
+        but2.bind("<Button-1>", color)
         label2 = Label( root, text = "ряд "+str(row_name)).grid(row = x, column = 12)
         seat_name += 1
         #bigseat_name += 1
