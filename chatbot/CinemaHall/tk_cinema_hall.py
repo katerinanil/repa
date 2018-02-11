@@ -17,11 +17,11 @@ def color(event):
      #li[1] = li[0]
 
 Button(root, text = "VIP 1 (500р)",  background="cyan3",
-               foreground="white",).grid(row = 0, column = 1, columnspan = 3, ipadx = 15, padx = 3, pady = 5, sticky = E)
+               foreground="white",).grid(row = 0, column = 1, columnspan = 3, ipadx = 10, padx = 3, pady = 5, sticky = E)
 Button(root, text = "VIP 2 (500р)",  background="cyan3",
                foreground="white",).grid(row = 0, column = 5, columnspan = 3, ipadx = 15, padx = 3, pady = 5, sticky = W)
 Button(root, text = "VIP 3 (500р)",  background="cyan3",
-               foreground="white",).grid(row = 0, column = 8, columnspan = 3, ipadx = 10, padx = 7, pady = 5, sticky = E)
+               foreground="white",).grid(row = 0, column = 8, columnspan = 3, ipadx = 10, padx = 3, pady = 5, sticky = W)
 
 
 for x in range(1, 11):
