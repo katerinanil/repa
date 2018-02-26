@@ -8,7 +8,8 @@ if __name__ == '__main__':
     base = knowledge_base()
     chaplin = chatbot(data, base)
 
+    msg = ''
     while True:
-        msg = input()
         chaplin.chat(msg)
+        msg = input('> ')
         pass

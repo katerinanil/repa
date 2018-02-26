@@ -30,3 +30,12 @@ def add_film(db, date, film, times, halls):
 def get_films_names(db, date):
     films = db[date]
     return films.keys()
+
+def get_times_by_film(db, date, film):
+    return db[date][film][0]
+
+def get_prices_by_film(db, date, film):
+    prices = set()
+    for seat in db[date][film][2]:
+        prices.add(seat.price)
+    return prices

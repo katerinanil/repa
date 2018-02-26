@@ -16,6 +16,16 @@ if __name__ == '__main__':
         # 'Оно', '1945', 'Расписание', 'Невский 4D'])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
                 'Человек-Носорог', ('13:00', '14:00'), (0, 1))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Великолепный удар 7', ('19:07',), (2,))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Оно', ('13:00',), (1, 2))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                '1945', ('15:00',), (0, 1, 2))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Расписание', ('10:00',), (0,))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Невский 4D', ('15:00',), (1,))
     db.add_date(data, db.make_date(now.day + 1, now.month, now.year))
         #['Иннокентий', 'Бой с ленью',
         # 'Чаплин', 'Диплом'])
