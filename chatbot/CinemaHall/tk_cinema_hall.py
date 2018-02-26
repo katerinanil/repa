@@ -1,13 +1,24 @@
 from tkinter import *
+#from Pillow import ImageTk, Image
 
 root = Tk()
-root.title(u'Cinema Hall')
+root.title(u'CHAPLIN')
 #root.geometry('381x425')
-root.geometry('745x425')
+root.geometry('745x525')
 root.resizable(width=False, height=False)
+root.tk.call('wm', 'iconphoto', root._w, PhotoImage(file='c2.png'))
+frame = Frame(bg = 'black')
 
 seat_name = 1
 row_name = 10
+
+#img = imageTk.PhotoImage(Image.open('ico.png'))
+chap1 = PhotoImage(file="ico.png")
+Label(root, image = chap1).grid(row=0, column=0, columnspan = 4)
+chap2 = PhotoImage(file="ico.png")
+Label(root, image = chap2).grid(row=0, column=2, columnspan = 4)
+chap3 = PhotoImage(file="ico.png")
+Label(root, image = chap3).grid(row=0, column=4, columnspan = 4)
 
 li = ["grey", "royalblue"]
 def color(event):
