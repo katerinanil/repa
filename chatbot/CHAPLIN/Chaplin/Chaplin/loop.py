@@ -11,5 +11,6 @@ if __name__ == '__main__':
     msg = ''
     while True:
         chaplin.chat(msg)
-        msg = input('> ')
+        print('    Вы: ', end='')
+        msg = input()
         pass
