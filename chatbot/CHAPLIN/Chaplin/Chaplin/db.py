@@ -23,7 +23,8 @@ def add_film(db, date, film, timesAndHalls):
         for j in range(SEATS_COUNT):
             price = 200
             if j == 4 or j == 5: price += 100
-            hour = int(date[:2])
+            time = timesAndHalls[i][0]
+            hour = int(time[:2])
             if hour > 17:
                 if hour < 23:
                     price += 50 * (hour - 18)
@@ -36,6 +37,9 @@ def add_film(db, date, film, timesAndHalls):
     db[date] = films_dict
     #print(list(db.items()))
     #pass
+
+def get_dates(db):
+    return db.keys()
 
 def get_films_names(db, date):
     films = db[date]
