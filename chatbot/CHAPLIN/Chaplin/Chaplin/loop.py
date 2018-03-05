@@ -11,8 +11,8 @@ def makeRequest(words, morph):
 if __name__ == '__main__':
     data = shelve.open(config.DB_NAME)
     base = knowledge_base()
-    chaplin = chatbot(data, base)
     morph = MorphAnalyzer()
+    chaplin = chatbot(data, base, morph)
     msg = []
     while True:
         chaplin.chat(msg)

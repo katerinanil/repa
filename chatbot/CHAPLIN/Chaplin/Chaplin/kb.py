@@ -3,6 +3,7 @@ import re
 class knowledge_base:
     def __init__(self):
         self.is_first = True
+        self.film_name = None
         self.is_film_price = False
 
     @staticmethod
