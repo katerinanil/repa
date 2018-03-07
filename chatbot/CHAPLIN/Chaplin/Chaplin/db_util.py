@@ -15,7 +15,7 @@ if __name__ == '__main__':
         #['Человек-Носорог', 'Великолепный удар 7',
         # 'Оно', '1945', 'Расписание', 'Невский 4D'])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Человек-Носорог', (['13:00', 0], ['14:00', 1]))
+                'Человек-Носорог', (['13:00', 0], ['14:00', 1], ['19:00', 0], ['23:00', 0]))
     db.add_film(data, db.make_date(now.day, now.month, now.year),
                 'Великолепный удар 7', (['19:07', 2],))
     db.add_film(data, db.make_date(now.day, now.month, now.year),

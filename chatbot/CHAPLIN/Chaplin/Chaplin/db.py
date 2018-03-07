@@ -1,4 +1,5 @@
 import shelve
+from functools import reduce
 
 HALLS_COUNT = 3
 SEATS_COUNT = 100
@@ -47,3 +48,11 @@ def get_films_names(db, date):
 
 def get_times_by_film(db, date, film):
     return [t for t, h, s in db[date][film]]
+
+def get_minmax_price_by_film_and_time(db, date, film, time):
+    for t, h, s in db[date][film]:
+        if t == time:
+            prices = [seat.price for seat in s]
+            mn = reduce(min, prices, s[0].price)
+            mx = reduce(max, prices, s[0].price)
+            return mn, mx
