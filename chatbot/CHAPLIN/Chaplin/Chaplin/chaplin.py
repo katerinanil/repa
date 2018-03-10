@@ -22,6 +22,10 @@ class chatbot:
             if count >= 2 or (len(film_words) == 1 and count == 1):
                 self.base.film_name = film; break
 
+    def check_film_time(self, msg):
+
+        pass
+
     def check_film_price(self, msg):
         for check in ['почем', 'сколько стоит',
             'сколько стоят', 'какую цену']:
@@ -36,6 +40,7 @@ class chatbot:
 
     def chat(self, msg):
         self.check_film_name(msg)
+        self.check_film_time(msg)
         self.check_film_price(msg)
 
         if self.base.is_first:
