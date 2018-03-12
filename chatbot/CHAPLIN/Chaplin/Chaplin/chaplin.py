@@ -12,15 +12,41 @@ class chatbot:
         now = datetime.datetime.now()
         self.date = db.make_date(now.day, now.month, now.year)
 
+    def get_norm(self, word):
+        return self.morph.normal_forms(word)[0]
+
     def check_film_name(self, msg):
         for film in db.get_films_names(self.data, self.date):
             count = 0
             film_words = kb.knowledge_base.split_words(film)
             for film_word in film_words:
-                film_word_norm = self.morph.normal_forms(film_word)[0]
+                film_word_norm = self.get_norm(film_word)
                 if film_word_norm in msg: count += 1
             if count >= 2 or (len(film_words) == 1 and count == 1):
                 self.base.film_name = film; break
+
+    def check_number(self, st, nxt):
+        nums = ['ноль', 'один', 'два', 'три', 'четыре',
+         'пять', 'шесть', 'семь', 'восемь', 'девять',
+         'десять', 'одиннадцать', 'двенадцать',
+         'тринадцать', 'четырнадцать', 'пятнадцать',
+         'шестнадцать', 'семнадцать', 'восемнадцать',
+         'девятнадцать']
+        tens = ['двадцать', 'тридцать',
+                  'сорок', 'пятьдесят']
+        st = self.get_norm(st)
+        try: num = int(st); return num
+        except ValueError: pass
+        try: index = nums.index(st); return index
+        except ValueError: pass
+        try:
+            index = tens.index(st)
+            try:
+                nxt = self.get_norm(nxt)
+                index2 = nums[1:10].index(nxt)
+                return index * 10 + 20 + index2 + 1
+            except ValueError: return index * 10 + 20
+        except ValueError: return None
 
     def check_film_time(self, msg):
 
@@ -32,7 +58,7 @@ class chatbot:
             count = 0
             check_words = kb.knowledge_base.split_words(check)
             for check_word in check_words:
-                check_word_norm = self.morph.normal_forms(check_word)[0]
+                check_word_norm = self.get_norm(check_word)
                 if check_word_norm in msg: count += 1
             if count == len(check_words):
                 self.base.is_film_price = True
