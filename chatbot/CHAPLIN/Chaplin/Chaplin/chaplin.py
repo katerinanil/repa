@@ -25,7 +25,7 @@ class chatbot:
             if count >= 2 or (len(film_words) == 1 and count == 1):
                 self.base.film_name = film; break
 
-    def check_number(self, st, nxt):
+    def _check_number(self, st, nxt):
         nums = ['ноль', 'один', 'два', 'три', 'четыре',
          'пять', 'шесть', 'семь', 'восемь', 'девять',
          'десять', 'одиннадцать', 'двенадцать',
@@ -35,20 +35,31 @@ class chatbot:
         tens = ['двадцать', 'тридцать',
                   'сорок', 'пятьдесят']
         st = self.get_norm(st)
-        try: num = int(st); return num
+        try: num = int(st); return num, 1
         except ValueError: pass
-        try: index = nums.index(st); return index
+        try: index = nums.index(st); return index, 1
         except ValueError: pass
         try:
             index = tens.index(st)
             try:
                 nxt = self.get_norm(nxt)
                 index2 = nums[1:10].index(nxt)
-                return index * 10 + 20 + index2 + 1
-            except ValueError: return index * 10 + 20
-        except ValueError: return None
+                return index * 10 + 20 + index2 + 1, 2
+            except ValueError: return index * 10 + 20, 1
+        except ValueError: return None, 0
 
     def check_film_time(self, msg):
+
+        for i in range(len(msg)):
+            next_word = msg[i+1] if i != len(msg)-1 else ''
+            num_h, num_h_count = self._check_number(msg[i], next_word)
+            if num_h != None:
+                if i < len(msg) - num_h_count:
+                    next_word = msg[i+num_h_count+1] if i != len(msg)-num_h_count-1 else ''
+                    num_m, num_m_count = self._check_number(msg[i+num_h_count], next_word)
+                    if num_m != None:
+                       self.base.film_time.hours = num_h
+                       self.base.film_time.minutes = num_m
 
         pass
 
