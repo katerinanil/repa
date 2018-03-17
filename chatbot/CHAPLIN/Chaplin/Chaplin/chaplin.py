@@ -12,7 +12,7 @@ class chatbot:
         now = datetime.datetime.now()
         self.date = db.make_date(now.day, now.month, now.year)
 
-    def get_norm(self, word):
+    def _get_norm(self, word):
         return self.morph.normal_forms(word)[0]
 
     def check_film_name(self, msg):
@@ -20,7 +20,7 @@ class chatbot:
             count = 0
             film_words = kb.knowledge_base.split_words(film)
             for film_word in film_words:
-                film_word_norm = self.get_norm(film_word)
+                film_word_norm = self._get_norm(film_word)
                 if film_word_norm in msg: count += 1
             if count >= 2 or (len(film_words) == 1 and count == 1):
                 self.base.film_name = film; break
@@ -34,34 +34,63 @@ class chatbot:
          'девятнадцать']
         tens = ['двадцать', 'тридцать',
                   'сорок', 'пятьдесят']
-        st = self.get_norm(st)
+        st = self._get_norm(st)
         try: num = int(st); return num, 1
         except ValueError: pass
         try: index = nums.index(st); return index, 1
         except ValueError: pass
+        if st == 'час': return 1, 1
         try:
             index = tens.index(st)
             try:
-                nxt = self.get_norm(nxt)
+                nxt = self._get_norm(nxt)
                 index2 = nums[1:10].index(nxt)
                 return index * 10 + 20 + index2 + 1, 2
             except ValueError: return index * 10 + 20, 1
         except ValueError: return None, 0
 
     def check_film_time(self, msg):
-
-        for i in range(len(msg)):
-            next_word = msg[i+1] if i != len(msg)-1 else ''
-            num_h, num_h_count = self._check_number(msg[i], next_word)
-            if num_h != None:
-                if i < len(msg) - num_h_count:
-                    next_word = msg[i+num_h_count+1] if i != len(msg)-num_h_count-1 else ''
-                    num_m, num_m_count = self._check_number(msg[i+num_h_count], next_word)
-                    if num_m != None:
-                       self.base.film_time.hours = num_h
-                       self.base.film_time.minutes = num_m
-
-        pass
+        pmam = ['день', 'вечер', 'полдень', 'полночь']
+        half = ['половина', 'четверть']
+        ft = self.base.film_time
+        for w in msg:
+            if w in pmam: ft.pmam = w
+            if w in half: ft.half = w
+                
+        if not ft.pmam in pmam[-2:]:
+            for i in range(len(msg)):
+                next_word = msg[i+1] if i != len(msg)-1 else ''
+                num_h, num_h_count = self._check_number(msg[i], next_word)
+                if num_h != None:
+                    if ft.minutes == None:
+                        if i < len(msg) - num_h_count:
+                            next_word = msg[i+num_h_count+1] if i != len(msg)-num_h_count-1 else ''
+                            num_m, num_m_count = self._check_number(msg[i+num_h_count], next_word)
+                            if num_m != None:
+                               ft.hours = num_h
+                               ft.minutes = num_m
+                               break
+                            elif self._get_norm(next_word) == 'минута':
+                               ft.minutes = num_h
+                            elif ft.hours == None: ft.hours = num_h
+                        else: ft.hours = num_h; break
+                    else: ft.hours = num_h; break
+        else: ft.hours = 0 if ft.pmam == pmam[-1] else 12; ft.minutes = 0
+        if not ft.hours in range(0, 24): ft.hours = None
+        elif not ft.minutes in range(0, 60): ft.minutes = None
+        if ft.hours != None:
+            if ft.minutes == None: ft.minutes = 0
+            if ft.pmam in pmam[0:2]: ft.hours += 12
+            if ft.half != None:
+                d = datetime.datetime(1970, 1, 1, ft.hours, ft.minutes, 0)
+                span = 30 if ft.half == half[0] else 45
+                d -= datetime.timedelta(minutes=span)
+                ft.hours = d.hour
+                ft.minutes = d.minute
+            time_ex = '%02d:%02d' % (ft.hours, ft.minutes)
+            self.base.film_time = kb.knowledge_base.film_time_type()
+            self.base.film_time.time = time_ex
+        else: self.base.film_time = kb.knowledge_base.film_time_type()
 
     def check_film_price(self, msg):
         for check in ['почем', 'сколько стоит',
@@ -69,7 +98,7 @@ class chatbot:
             count = 0
             check_words = kb.knowledge_base.split_words(check)
             for check_word in check_words:
-                check_word_norm = self.get_norm(check_word)
+                check_word_norm = self._get_norm(check_word)
                 if check_word_norm in msg: count += 1
             if count == len(check_words):
                 self.base.is_film_price = True
@@ -79,6 +108,8 @@ class chatbot:
         self.check_film_name(msg)
         self.check_film_time(msg)
         self.check_film_price(msg)
+
+        print('TIME=' + str(self.base.film_time.time) + '\n')
 
         if self.base.is_first:
             print('|Добро пожаловать в CHAPLIN! Сегодня, ' +  str(datetime.datetime.now().day) + ' ' +\

@@ -7,6 +7,7 @@ class knowledge_base:
             self.hours = None
             self.minutes = None
             self.pmam = None
+            self.half = None
     def __init__(self):
         self.is_first = True
         self.film_name = None
