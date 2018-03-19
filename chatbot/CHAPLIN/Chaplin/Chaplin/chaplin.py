@@ -26,15 +26,16 @@ class chatbot:
                 self.base.film_name = film; break
 
     def _check_number(self, st, nxt):
-        nums = ['ноль', 'один', 'два', 'три', 'четыре',
+        nums = ['HOLDER', 'один', 'два', 'три', 'четыре',
          'пять', 'шесть', 'семь', 'восемь', 'девять',
          'десять', 'одиннадцать', 'двенадцать',
          'тринадцать', 'четырнадцать', 'пятнадцать',
          'шестнадцать', 'семнадцать', 'восемнадцать',
          'девятнадцать']
-        tens = ['двадцать', 'тридцать',
-                  'сорок', 'пятьдесят']
+        tens = ['ноль', 'HOLDER', 'двадцать',
+                'тридцать', 'сорок', 'пятьдесят']
         st = self._get_norm(st)
+        nxt = self._get_norm(nxt)
         try: num = int(st); return num, 1
         except ValueError: pass
         try: index = nums.index(st); return index, 1
@@ -43,11 +44,14 @@ class chatbot:
         try:
             index = tens.index(st)
             try:
-                nxt = self._get_norm(nxt)
                 index2 = nums[1:10].index(nxt)
-                return index * 10 + 20 + index2 + 1, 2
-            except ValueError: return index * 10 + 20, 1
-        except ValueError: return None, 0
+                return index * 10 + index2 + 1, 2
+            except ValueError: return index * 10, 1
+        except ValueError: pass
+        if st == 'ноль':
+            if nxt == 'ноль': return 0, 2
+            return 0, 1
+        return None, 0
 
     def check_film_time(self, msg):
         pmam = ['день', 'вечер', 'полдень', 'полночь']
@@ -70,15 +74,16 @@ class chatbot:
                                ft.hours = num_h
                                ft.minutes = num_m
                                break
-                            elif self._get_norm(next_word) == 'минута':
+                            elif self._get_norm(msg[i+num_h_count]) == 'минута':
                                ft.minutes = num_h
                             elif ft.hours == None: ft.hours = num_h
-                        else: ft.hours = num_h; break
+                        elif ft.hours == None: ft.hours = num_h; break
                     else: ft.hours = num_h; break
         else: ft.hours = 0 if ft.pmam == pmam[-1] else 12; ft.minutes = 0
-        if not ft.hours in range(0, 24): ft.hours = None
+        if not ft.hours in range(0, 25): ft.hours = None
         elif not ft.minutes in range(0, 60): ft.minutes = None
         if ft.hours != None:
+            ft.hours %= 24
             if ft.minutes == None: ft.minutes = 0
             if ft.pmam in pmam[0:2]: ft.hours += 12
             if ft.half != None:
