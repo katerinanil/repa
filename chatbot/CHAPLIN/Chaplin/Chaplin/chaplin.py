@@ -26,42 +26,46 @@ class chatbot:
                 self.base.film_name = film; break
 
     def _check_number(self, st, nxt):
-        nums = ['HOLDER', 'один', 'два', 'три', 'четыре',
+        nums = ['HOOK', 'один', 'два', 'три', 'четыре',
          'пять', 'шесть', 'семь', 'восемь', 'девять',
          'десять', 'одиннадцать', 'двенадцать',
          'тринадцать', 'четырнадцать', 'пятнадцать',
          'шестнадцать', 'семнадцать', 'восемнадцать',
-         'девятнадцать'] #+'одинадцать',
-        tens = ['ноль', 'HOLDER', 'двадцать',
+         'девятнадцать']
+        tens = ['ноль', 'HOOK', 'двадцать',
                 'тридцать', 'сорок', 'пятьдесят']
         st = self._get_norm(st)
         nxt = self._get_norm(nxt)
         try: num = int(st); return num, 1
         except ValueError: pass
         try: index = nums.index(st); return index, 1
-        except ValueError: pass
+        except ValueError:
+            if st == 'первое': return 1, 1
+            if st == 'третье': return 3, 1
         if st == 'час': return 1, 1
         try:
             index = tens.index(st)
             try:
                 index2 = nums[1:10].index(nxt)
                 return index * 10 + index2 + 1, 2
-            except ValueError: return index * 10, 1
+            except ValueError:
+                if nxt == 'первое': return index * 10 + 1, 2
+                if nxt == 'третье': return index * 10 + 3, 2
+                if nxt == 'ноль': return index * 10, 2
+                else: return index * 10, 1
         except ValueError: pass
-        if st == 'ноль':
-            if nxt == 'ноль': return 0, 2
-            return 0, 1
         return None, 0
 
     def check_film_time(self, msg):
-        pmam = ['день', 'вечер', 'полдень', 'полночь'] #+полуночь
+        pmam = ['день', 'вечер', 'полдень', 'полночь', 'полуночь']
         half = ['половина', 'четверть']
         ft = self.base.film_time
+        ft.pmam = None
         for w in msg:
             if w in pmam: ft.pmam = w
             if w in half: ft.half = w
                 
-        if not ft.pmam in pmam[-2:]:
+        if not ft.pmam in pmam[-3:]:
             for i in range(len(msg)):
                 next_word = msg[i+1] if i != len(msg)-1 else ''
                 num_h, num_h_count = self._check_number(msg[i], next_word)
@@ -78,8 +82,12 @@ class chatbot:
                                ft.minutes = num_h
                             elif ft.hours == None: ft.hours = num_h
                         elif ft.hours == None: ft.hours = num_h; break
-                    else: ft.hours = num_h; break
-        else: ft.hours = 0 if ft.pmam == pmam[-1] else 12; ft.minutes = 0
+                    else:
+                        if i < len(msg) - num_h_count and \
+                            self._get_norm(msg[i+num_h_count]) == 'часы':
+                            ft.hours = num_h; break
+                        else: ft.hours = num_h - 1; break
+        else: ft.hours = 0 if ft.pmam in pmam[-2:] else 12; ft.minutes = 0
         if not ft.hours in range(0, 25): ft.hours = None
         elif not ft.minutes in range(0, 60): ft.minutes = None
         if ft.hours != None:
@@ -92,9 +100,8 @@ class chatbot:
                 d -= datetime.timedelta(minutes=span)
                 ft.hours = d.hour
                 ft.minutes = d.minute
-            time_ex = '%02d:%02d' % (ft.hours, ft.minutes)
-            self.base.film_time = kb.knowledge_base.film_time_type()
-            self.base.film_time.time = time_ex
+            ft.time = '%02d:%02d' % (ft.hours, ft.minutes)
+            ft.hours = ft.minutes = ft.half = None
         else: self.base.film_time = kb.knowledge_base.film_time_type()
 
     def check_film_price(self, msg):
