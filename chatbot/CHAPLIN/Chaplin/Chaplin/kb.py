@@ -13,6 +13,7 @@ class knowledge_base:
         self.film_name = None
         self.is_film_price = False
         self.film_time = knowledge_base.film_time_type()
+        self.is_ticket_for = False
 
     @staticmethod
     def split_words(msg):

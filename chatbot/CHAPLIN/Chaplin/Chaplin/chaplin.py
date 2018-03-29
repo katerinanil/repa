@@ -15,6 +15,23 @@ class chatbot:
     def _get_norm(self, word):
         return self.morph.normal_forms(word)[0]
 
+    def split_four_numbers(self, msg):
+        i = 0
+        while i < len(msg):
+            if len(msg[i]) == 4:
+                try:
+                    int(msg[i])
+                    num1, num2 = msg[i][:2], msg[i][2:]
+                    msg[i] = num1
+                    msg.insert(i + 1, num2)
+                except ValueError: pass
+            i += 1
+
+    #def cut_ticket_for(self, msg):
+    #    for i in range(1, len(msg)):
+    #        if msg[i] == 'билет':
+    #            del msg[i - 1]
+
     def check_film_name(self, msg):
         for film in db.get_films_names(self.data, self.date):
             count = 0
@@ -89,11 +106,12 @@ class chatbot:
                         else: ft.hours = num_h - 1; break
         else: ft.hours = 0 if ft.pmam in pmam[-2:] else 12; ft.minutes = 0
         if not ft.hours in range(0, 25): ft.hours = None
+        if ft.pmam in pmam[0:2] and not ft.hours in range(0, 13): ft.hours = None
         elif not ft.minutes in range(0, 60): ft.minutes = None
         if ft.hours != None:
+            if ft.pmam in pmam[0:2]: ft.hours += 12
             ft.hours %= 24
             if ft.minutes == None: ft.minutes = 0
-            if ft.pmam in pmam[0:2]: ft.hours += 12
             if ft.half != None:
                 d = datetime.datetime(1970, 1, 1, ft.hours, ft.minutes, 0)
                 span = 30 if ft.half == half[0] else 45
@@ -117,6 +135,7 @@ class chatbot:
                 self.base.is_first = False; break
 
     def chat(self, msg):
+        self.split_four_numbers(msg)
         self.check_film_name(msg)
         self.check_film_time(msg)
         self.check_film_price(msg)
