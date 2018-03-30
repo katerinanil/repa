@@ -56,3 +56,7 @@ def get_minmax_price_by_film_and_time(db, date, film, time):
             mn = reduce(min, prices, s[0].price)
             mx = reduce(max, prices, s[0].price)
             return mn, mx
+
+def get_seats_by_film_and_time(db, date, film, time):
+    for t, h, s in db[date][film]:
+        if t == time: return s

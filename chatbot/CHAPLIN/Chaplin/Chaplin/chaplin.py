@@ -131,8 +131,7 @@ class chatbot:
                 check_word_norm = self._get_norm(check_word)
                 if check_word_norm in msg: count += 1
             if count == len(check_words):
-                self.base.is_film_price = True
-                self.base.is_first = False; break
+                self.base.is_film_price = True; break
 
     def chat(self, msg):
         self.split_four_numbers(msg)
@@ -142,7 +141,7 @@ class chatbot:
 
         print('TIME=' + str(self.base.film_time.time) + '\n')
 
-        if self.base.is_first:
+        if self.base.is_schedule:
             print('|Добро пожаловать в CHAPLIN! Сегодня, ' +  str(datetime.datetime.now().day) + ' ' +\
                 chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
             for film in db.get_films_names(self.data, self.date):
@@ -151,6 +150,7 @@ class chatbot:
                     line += time + ' '
                 print(line)
             print('\nЧаплин: Пожалуйста, выберите сеанс')
+            self.base.is_schedule = False
         elif self.base.is_film_price:
             if self.base.film_name != None:
                 print('Чаплин: Цены билетов фильма ' + self.base.film_name + ':\n')
@@ -159,5 +159,16 @@ class chatbot:
                     mn, mx = db.get_minmax_price_by_film_and_time(self.data, self.date, self.base.film_name, time)
                     print(mn, '-', mx, ' руб.', sep='')
             else: print('Чаплин: Цена какого фильма интересует?')
-        else:
+        elif self.base.film_name != None:
+            if self.base.film_time.time == None:
+                times = db.get_times_by_film(self.data, self.date, self.base.film_name)
+                if len(times) == 1: self.base.film_time.time = times[0]
+            if self.base.film_time.time != None:
+                seats = db.get_seats_by_film_and_time(self.data, self.date, self.base.film_name, self.base.film_time.time)
+                if seats != None:
+                    #open tkinker
+                    pass
+                else:
+                    #say that no this time for this film
+                    pass
             pass

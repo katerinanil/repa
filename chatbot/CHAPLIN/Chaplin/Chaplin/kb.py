@@ -9,7 +9,7 @@ class knowledge_base:
             self.pmam = None
             self.half = None
     def __init__(self):
-        self.is_first = True
+        self.is_schedule = True
         self.film_name = None
         self.is_film_price = False
         self.film_time = knowledge_base.film_time_type()
