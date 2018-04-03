@@ -1,1 +1,4 @@
+//event binging
 http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
+//destroy withdraw deiconify
+http://howtucode.com/how-do-i-get-rid-of-python-tkinter-root-window-115632.html
