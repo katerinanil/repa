@@ -1,4 +1,4 @@
-﻿import datetime, db, kb
+﻿import datetime, db, kb, seat_gui
 
 class chatbot:
     monthes_names = ['января', 'февраля', 'марта', 'апреля', 
@@ -166,8 +166,7 @@ class chatbot:
             if self.base.film_time.time != None:
                 seats = db.get_seats_by_film_and_time(self.data, self.date, self.base.film_name, self.base.film_time.time)
                 if seats != None:
-                    #open tkinker
-                    pass
+                    seat_gui.create_gui(seats, lambda:"")
                 else:
                     #say that no this time for this film
                     pass

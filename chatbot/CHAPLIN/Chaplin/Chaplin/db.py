@@ -21,9 +21,11 @@ def add_date(db, date):
 def add_film(db, date, film, timesAndHalls):
     for i in range(len(timesAndHalls)):
         seats = []
+        #seats row by row from 1 to 10
         for j in range(SEATS_COUNT):
             price = 200
-            if j == 4 or j == 5: price += 100
+            if (j - 4) % 10 == 0 or \
+               (j - 5) % 10 == 0: price += 100
             time = timesAndHalls[i][0]
             hour = int(time[:2])
             if hour > 17:
