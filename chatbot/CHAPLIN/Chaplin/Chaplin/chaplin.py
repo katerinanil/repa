@@ -166,7 +166,9 @@ class chatbot:
             if self.base.film_time.time != None:
                 seats = db.get_seats_by_film_and_time(self.data, self.date, self.base.film_name, self.base.film_time.time)
                 if seats != None:
-                    seat_gui.create_gui(seats, lambda:"")
+                    seat_gui.create_gui(seats,
+                        lambda selected_seats, is_book: db.order_seats(self.data, self.date, self.base.film_name,
+                            self.base.film_time.time, selected_seats, is_book))
                 else:
                     #say that no this time for this film
                     pass
