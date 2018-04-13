@@ -133,24 +133,24 @@ class chatbot:
             if count == len(check_words):
                 self.base.is_film_price = True; break
 
+    def print_schedule(self):
+        print('|Добро пожаловать в CHAPLIN! Сегодня, ' +  str(datetime.datetime.now().day) + ' ' +\
+            chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
+        for film in db.get_films_names(self.data, self.date):
+            line = '  ' + film + ' ' * (30 - len(film))
+            for time in db.get_times_by_film(self.data, self.date, film):
+                line += time + ' '
+            print(line)
+        print('\nЧаплин: Пожалуйста, выберите сеанс')
+        self.base.is_schedule = False
+
     def chat(self, msg):
         self.split_four_numbers(msg)
         self.check_film_name(msg)
         self.check_film_time(msg)
         self.check_film_price(msg)
 
-        print('TIME=' + str(self.base.film_time.time) + '\n')
-
-        if self.base.is_schedule:
-            print('|Добро пожаловать в CHAPLIN! Сегодня, ' +  str(datetime.datetime.now().day) + ' ' +\
-                chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
-            for film in db.get_films_names(self.data, self.date):
-                line = '  ' + film + ' ' * (30 - len(film))
-                for time in db.get_times_by_film(self.data, self.date, film):
-                    line += time + ' '
-                print(line)
-            print('\nЧаплин: Пожалуйста, выберите сеанс')
-            self.base.is_schedule = False
+        if self.base.is_schedule: self.print_schedule()
         elif self.base.is_film_price:
             if self.base.film_name != None:
                 print('Чаплин: Цены билетов фильма ' + self.base.film_name + ':\n')
@@ -166,9 +166,17 @@ class chatbot:
             if self.base.film_time.time != None:
                 seats = db.get_seats_by_film_and_time(self.data, self.date, self.base.film_name, self.base.film_time.time)
                 if seats != None:
-                    seat_gui.create_gui(seats,
-                        lambda selected_seats, is_book: db.order_seats(self.data, self.date, self.base.film_name,
-                            self.base.film_time.time, selected_seats, is_book))
+                    def callback_gui(is_success, selected_seats = [], is_book = False):
+                        if is_success:
+                            db.order_seats(self.data, self.date, self.base.film_name,
+                                self.base.film_time.time, selected_seats, is_book)
+                            self.base = kb.knowledge_base()
+                            self.base.is_schedule = False
+                            print('Чаплин: Приятного просмотра!')
+                        else:
+                            self.base = kb.knowledge_base()
+                            self.print_schedule()
+                    seat_gui.create_gui(seats, callback_gui)
                 else:
                     #say that no this time for this film
                     pass

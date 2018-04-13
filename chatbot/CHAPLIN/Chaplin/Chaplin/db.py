@@ -67,3 +67,9 @@ def order_seats(db, date, film, time, selected_seats, is_book):
     seats = get_seats_by_film_and_time(db, date, film, time)
     for index in selected_seats:
         seats[index].state = Seat.BOOK if is_book else Seat.BUSY
+    for i in range(len(db[date][film])):
+        if db[date][film][i][0] == time:
+            films = db[date]
+            films[film][i] = [db[date][film][i][0], db[date][film][i][1], seats]
+            db[date] = films
+            break

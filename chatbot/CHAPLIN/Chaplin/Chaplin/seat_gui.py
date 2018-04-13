@@ -9,6 +9,11 @@ def create_gui(seats, callback):
     colors = ['royalblue', 'grey', 'light sea green']
     selected_seats = []
 
+    def on_closing():
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            callback(False)
+            root.destroy()
+
     def process_seat_click(event):
         color = event.widget.cget('bg')
         if color == colors[0]:
@@ -20,11 +25,12 @@ def create_gui(seats, callback):
 
     def process_order_click(event):
         if len(selected_seats) != 0:
-            callback(selected_seats, event.widget.is_book)
+            callback(True, selected_seats, event.widget.is_book)
             root.destroy()
         else: messagebox.showwarning('Упс..', 'Не выбраны места')
 
     root = Tk()
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.title('CHAPLIN')
     root.geometry('745x525')
     root.resizable(width=False, height=False)
