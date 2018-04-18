@@ -35,12 +35,18 @@ class chatbot:
     def check_film_name(self, msg):
         for film in db.get_films_names(self.data, self.date):
             count = 0
+            msg_overI = []
             film_words = kb.knowledge_base.split_words(film)
             for film_word in film_words:
                 film_word_norm = self._get_norm(film_word)
-                if film_word_norm in msg: count += 1
+                if film_word_norm in msg:
+                    count += 1
+                    msg_overI.append(msg.index(film_word_norm))
             if count >= 2 or (len(film_words) == 1 and count == 1):
-                self.base.film_name = film; break
+                self.base.film_name = film
+                for i in range(len(msg_overI)):
+                    del msg[msg_overI[i] - i]
+                break
 
     def _check_number(self, st, nxt):
         nums = ['HOOK', 'один', 'два', 'три', 'четыре',
@@ -55,7 +61,10 @@ class chatbot:
         nxt = self._get_norm(nxt)
         try: num = int(st); return num, 1
         except ValueError: pass
-        try: index = nums.index(st); return index, 1
+        try:
+            index = nums.index(st);
+            if nxt != 'час': return index, 1
+            else: return index, 2
         except ValueError:
             if st == 'первое': return 1, 1
             if st == 'третье': return 3, 1
@@ -80,8 +89,7 @@ class chatbot:
         ft.pmam = None
         for w in msg:
             if w in pmam: ft.pmam = w
-            if w in half: ft.half = w
-                
+            if w in half: ft.half = w           
         if not ft.pmam in pmam[-3:]:
             for i in range(len(msg)):
                 next_word = msg[i+1] if i != len(msg)-1 else ''
@@ -145,10 +153,11 @@ class chatbot:
         self.base.is_schedule = False
 
     def chat(self, msg):
-        self.split_four_numbers(msg)
         self.check_film_name(msg)
+        self.split_four_numbers(msg)
         self.check_film_time(msg)
         self.check_film_price(msg)
+        #print('TIME=' + str(self.base.film_time.time))
 
         if self.base.is_schedule: self.print_schedule()
         elif self.base.is_film_price:
@@ -176,8 +185,14 @@ class chatbot:
                         else:
                             self.base = kb.knowledge_base()
                             self.print_schedule()
-                    seat_gui.create_gui(seats, callback_gui)
+                    seat_gui.create_gui(seats, self.base.film_name, callback_gui)
                 else:
-                    #say that no this time for this film
-                    pass
+                    print('Чаплин: Для фильма ' + self.base.film_name +
+                          ' выбранное время отсутствует')
+                    print('        Выберите из следующих сеансов:')
+                    print('        ', end='')
+                    times = db.get_times_by_film(self.data, self.date, self.base.film_name)
+                    for time in times[:-1]: print(time, ', ', sep='', end='')
+                    print(times[-1])
+                    self.base.film_time = kb.knowledge_base.film_time_type()
             pass

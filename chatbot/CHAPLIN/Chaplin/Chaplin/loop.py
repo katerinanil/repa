@@ -20,4 +20,3 @@ if __name__ == '__main__':
         msg = input()
         msg = knowledge_base.split_words(msg)
         msg = makeRequest(msg, morph)
-        pass

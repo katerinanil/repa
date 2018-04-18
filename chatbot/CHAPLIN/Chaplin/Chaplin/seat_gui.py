@@ -4,7 +4,7 @@ from db import Seat
 
 #when click buy or book
 #call callback with seats nums
-def create_gui(seats, callback):
+def create_gui(seats, film_name, callback):
     #0=free, 1=busy|book, 2=selected 
     colors = ['royalblue', 'grey', 'light sea green']
     selected_seats = []
@@ -67,7 +67,7 @@ def create_gui(seats, callback):
             but2.seat_index = index
             but2.bind("<Button-1>", process_seat_click)
 
-    but = Button(root, text = "Э К Р А Н",  bg="indigo", foreground="white",)
+    but = Button(root, text = film_name,  bg="indigo", foreground="white",)
     but.grid(columnspan = 16, padx = 18, ipady = 5, pady = 15, sticky = W+E)
     but.bind("<Button-1>", lambda e: None)
 
