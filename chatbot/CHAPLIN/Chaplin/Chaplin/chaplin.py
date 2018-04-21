@@ -11,9 +11,21 @@ class chatbot:
         self.morph = morph
         now = datetime.datetime.now()
         self.date = db.make_date(now.day, now.month, now.year)
+        self.now = db.make_date(now.day, now.month, now.year)
 
     def _get_norm(self, word):
         return self.morph.normal_forms(word)[0]
+
+    def check_change_schedule(self, msg):
+        for check in ['показать', 'показывать',
+            'расписаение', 'прокат', 'идти']:
+            if check in msg:
+                for i, t in enumerate(['сегодня',
+                    'завтра', 'послезавтра']):
+                    if t in msg:
+                        self.date = self.now + datetime.timedelta(days=i)
+                        self.print_schedule()
+                        return
 
     def split_four_numbers(self, msg):
         i = 0
@@ -153,6 +165,7 @@ class chatbot:
         self.base.is_schedule = False
 
     def chat(self, msg):
+        self.check_change_schedule(msg)
         self.check_film_name(msg)
         self.split_four_numbers(msg)
         self.check_film_time(msg)

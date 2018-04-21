@@ -12,8 +12,6 @@ if __name__ == '__main__':
     now = datetime.datetime.now()
     data = shelve.open(DB_NAME)
     db.add_date(data, db.make_date(now.day, now.month, now.year))
-        #['Человек-Носорог', 'Великолепный удар 7',
-        # 'Оно', '1945', 'Расписание', 'Невский 4D'])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
                 'Человек-Носорог', [['13:00', 0], ['14:00', 1], ['19:00', 0], ['23:00', 0]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
@@ -27,9 +25,9 @@ if __name__ == '__main__':
     db.add_film(data, db.make_date(now.day, now.month, now.year),
                 'Невский 4D', [['15:00', 1],])
     db.add_date(data, db.make_date(now.day + 1, now.month, now.year))
-        #['Иннокентий', 'Бой с ленью',
-        # 'Чаплин', 'Диплом'])
-    db.add_date(data, db.make_date(now.day + 2, now.month, now.year))
+    db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
+                'Бой с ленью', [['15:00', 0], ['17:00', 1]])
+    #db.add_date(data, db.make_date(now.day + 2, now.month, now.year))
         #['Как Витька Чеснок вёз Лёху Штыря в дом инвалидов'])
     #print(list(data.items()))
     data.close()
