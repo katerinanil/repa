@@ -27,7 +27,14 @@ if __name__ == '__main__':
     db.add_date(data, db.make_date(now.day + 1, now.month, now.year))
     db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
                 'Бой с ленью', [['15:00', 0], ['17:00', 1]])
-    #db.add_date(data, db.make_date(now.day + 2, now.month, now.year))
-        #['Как Витька Чеснок вёз Лёху Штыря в дом инвалидов'])
+    db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
+                'Зефир в шоколаде', [['11:00', 0]])
+    db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
+                'Инопланетянин', [['12:00', 0], ['13:00', 1], ['14:00', 0]])
+    db.add_date(data, db.make_date(now.day + 2, now.month, now.year))
+    db.add_film(data, db.make_date(now.day + 2, now.month, now.year),
+                'Солнце', [['10:00', 0]])
+    db.add_film(data, db.make_date(now.day + 2, now.month, now.year),
+                'Люк и небо', [['12:00', 0], ['13:00', 0], ['14:00', 0], ['15:00', 0]])
     #print(list(data.items()))
     data.close()

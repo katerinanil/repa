@@ -18,12 +18,15 @@ class chatbot:
 
     def check_change_schedule(self, msg):
         for check in ['показать', 'показывать',
-            'расписаение', 'прокат', 'идти']:
+            'расписание', 'прокат', 'идти']:
             if check in msg:
                 for i, t in enumerate(['сегодня',
                     'завтра', 'послезавтра']):
                     if t in msg:
-                        self.date = self.now + datetime.timedelta(days=i)
+                        #day, month, year = self.now.split('.')
+                        #d = datetime.datetime(int(year), int(month), int(day), 0, 0, 0)
+                        d = datetime.datetime.now() + datetime.timedelta(days=i)
+                        self.date = db.make_date(d.day, d.month, d.year)
                         self.print_schedule()
                         return
 
@@ -154,7 +157,8 @@ class chatbot:
                 self.base.is_film_price = True; break
 
     def print_schedule(self):
-        print('|Добро пожаловать в CHAPLIN! Сегодня, ' +  str(datetime.datetime.now().day) + ' ' +\
+        print('|Добро пожаловать в CHAPLIN! Расписание на ' + 
+            self.date[:self.date.index('.')] + ' ' +\
             chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
         for film in db.get_films_names(self.data, self.date):
             line = '  ' + film + ' ' * (30 - len(film))
