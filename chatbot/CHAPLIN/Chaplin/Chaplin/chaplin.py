@@ -157,7 +157,10 @@ class chatbot:
                 self.base.is_film_price = True; break
 
     def print_schedule(self):
-        print('|Добро пожаловать в CHAPLIN! Расписание на ' + 
+        if self.base.is_first:
+            self.base.is_first = False
+            print('|Добро пожаловать в CHAPLIN! ', end='')
+        print('Расписание на ' + 
             self.date[:self.date.index('.')] + ' ' +\
             chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
         for film in db.get_films_names(self.data, self.date):
@@ -196,11 +199,11 @@ class chatbot:
                         if is_success:
                             db.order_seats(self.data, self.date, self.base.film_name,
                                 self.base.film_time.time, selected_seats, is_book)
-                            self.base = kb.knowledge_base()
+                            self.base = kb.knowledge_base(False)
                             self.base.is_schedule = False
                             print('Чаплин: Приятного просмотра!')
                         else:
-                            self.base = kb.knowledge_base()
+                            self.base = kb.knowledge_base(False)
                             self.print_schedule()
                     seat_gui.create_gui(seats, self.base.film_name, callback_gui)
                 else:

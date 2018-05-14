@@ -8,7 +8,8 @@ class knowledge_base:
             self.minutes = None
             self.pmam = None
             self.half = None
-    def __init__(self):
+    def __init__(self, is_first=True):
+        self.is_first = is_first
         self.is_schedule = True
         self.film_name = None
         self.is_film_price = False
