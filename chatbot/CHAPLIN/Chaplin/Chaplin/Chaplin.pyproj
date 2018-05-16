@@ -38,7 +38,7 @@
     <Compile Include="db_util.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="seat_gui.py">
+    <Compile Include="chaplin_gui.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

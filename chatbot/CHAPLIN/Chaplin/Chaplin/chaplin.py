@@ -1,4 +1,4 @@
-﻿import datetime, db, kb, seat_gui
+﻿import datetime, db, kb, chaplin_gui
 
 class chatbot:
     monthes_names = ['января', 'февраля', 'марта', 'апреля', 
@@ -205,7 +205,7 @@ class chatbot:
                         else:
                             self.base = kb.knowledge_base(False)
                             self.print_schedule()
-                    seat_gui.create_gui(seats, self.base.film_name, callback_gui)
+                    chaplin_gui.create_gui(seats, self.base.film_name, callback_gui)
                 else:
                     print('Чаплин: Для фильма ' + self.base.film_name +
                           ' выбранное время отсутствует')
