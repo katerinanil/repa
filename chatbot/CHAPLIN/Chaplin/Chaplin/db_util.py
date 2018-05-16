@@ -13,28 +13,44 @@ if __name__ == '__main__':
     data = shelve.open(DB_NAME)
     db.add_date(data, db.make_date(now.day, now.month, now.year))
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Человек-Носорог', [['13:00', 0], ['14:00', 1], ['19:00', 0], ['23:00', 0]])
+                'Мстители: Война Бесконечности', [['13:00', 0], ['14:00', 1], ['19:00', 0], ['23:00', 0]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Великолепный удар 7', [['19:07', 2],])
+                'Дэдпул 2', [['09:15', 2],['11:20', 2],['15:40', 2],['18:07', 2],['20:00', 2]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Оно', [['13:00', 1],])
+                'Третье убийство', [['13:00', 1],['16:30', 1],['19:45', 1],['21:40', 1],['23:01', 1]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                '1945', [['15:00', 2],])
+                'Истерия', [['10:00', 2],['12:15', 2],['17:25', 2],['20:40', 2]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Расписание', [['10:00',0],])
+                'Тренер', [['10:30',0],['14:35',0],['17:50',0],['22:00',0],]])
     db.add_film(data, db.make_date(now.day, now.month, now.year),
-                'Невский 4D', [['15:00', 1],])
+                'Редкая бабочка', [['15:00', 1],['20:10', 1]])
     db.add_date(data, db.make_date(now.day + 1, now.month, now.year))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Тренер', [['10:30',0],['14:35',0],['17:50',0],['22:00',0],]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Дэдпул 2', [['09:15', 2],['11:20', 2],['15:40', 2],['18:07', 2],['20:00', 2]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Тренер', [['10:30',0],['14:35',0],['17:50',0],['22:00',0],]])
     db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
-                'Бой с ленью', [['15:00', 0], ['17:00', 1]])
+                'Такси 5', [['8:50', 0], ['11:05', 1], ['16:00', 1], ['21:20', 1]])
     db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
-                'Зефир в шоколаде', [['11:00', 0]])
+                'Красавица для чудовища', [['10:00', 0], ['13:45', 0], ['19:15', 0]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Редкая бабочка', [['15:00', 1],['20:10', 1]])
     db.add_film(data, db.make_date(now.day + 1, now.month, now.year),
-                'Инопланетянин', [['12:00', 0], ['13:00', 1], ['14:00', 0]])
+                'Муза смерти', [['12:00', 0], ['16:30', 1], ['22:30', 0]])
     db.add_date(data, db.make_date(now.day + 2, now.month, now.year))
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Тренер', [['10:30',0],['14:35',0],['17:50',0],['22:00',0],]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Дэдпул 2', [['09:15', 2],['11:20', 2],['15:40', 2],['18:07', 2],['20:00', 2]])
     db.add_film(data, db.make_date(now.day + 2, now.month, now.year),
-                'Солнце', [['10:00', 0]])
+                'Чудеса', [['10:00', 0],['13:10', 0],['18:20', 0],['21:30', 0]])
     db.add_film(data, db.make_date(now.day + 2, now.month, now.year),
-                'Люк и небо', [['12:00', 0], ['13:00', 0], ['14:00', 0], ['15:00', 0]])
+                'За бортом', [['12:00', 0], ['14:00', 0], ['17:00', 0], ['22:00', 0]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Тренер', [['10:30',0],['14:35',0],['17:50',0],['22:00',0],]])
+    db.add_film(data, db.make_date(now.day, now.month, now.year),
+                'Редкая бабочка', [['15:00', 1],['20:10', 1]])
     #print(list(data.items()))
     data.close()

@@ -159,10 +159,10 @@ class chatbot:
     def print_schedule(self):
         if self.base.is_first:
             self.base.is_first = False
-            print('|Добро пожаловать в CHAPLIN! ', end='')
+            print('Добро пожаловать в CHAPLIN! ', end='')
         print('Расписание на ' + 
             self.date[:self.date.index('.')] + ' ' +\
-            chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:|\n')
+            chatbot.monthes_names[datetime.datetime.now().month - 1] + ', у нас в прокате:\n')
         for film in db.get_films_names(self.data, self.date):
             line = '  ' + film + ' ' * (30 - len(film))
             for time in db.get_times_by_film(self.data, self.date, film):
@@ -182,12 +182,12 @@ class chatbot:
         if self.base.is_schedule: self.print_schedule()
         elif self.base.is_film_price:
             if self.base.film_name != None:
-                print('Чаплин: Цены билетов фильма ' + self.base.film_name + ':\n')
+                print('Чаплин: Цены билетов на фильм ' + self.base.film_name + ':\n')
                 for time in db.get_times_by_film(self.data, self.date, self.base.film_name):
                     print('\t' + time + '\t', end='')
                     mn, mx = db.get_minmax_price_by_film_and_time(self.data, self.date, self.base.film_name, time)
                     print(mn, '-', mx, ' руб.', sep='')
-            else: print('Чаплин: Цена какого фильма интересует?')
+            else: print('Чаплин: Цена какого фильма Вас интересует?')
         elif self.base.film_name != None:
             if self.base.film_time.time == None:
                 times = db.get_times_by_film(self.data, self.date, self.base.film_name)
