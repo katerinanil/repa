@@ -205,7 +205,7 @@ class chatbot:
                         else:
                             self.base = kb.knowledge_base(False)
                             self.print_schedule()
-                    chaplin_gui.create_gui(seats, self.base.film_name, callback_gui)
+                    chaplin_gui.create_gui(seats, self.base.film_name, self.base.film_time.time, callback_gui)
                 else:
                     print('Чаплин: Для фильма ' + self.base.film_name +
                           ' выбранное время отсутствует')

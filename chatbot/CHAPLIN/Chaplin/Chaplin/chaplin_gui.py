@@ -4,7 +4,7 @@ from db import Seat
 
 #when click buy or book
 #call callback with seats nums
-def create_gui(seats, film_name, callback):
+def create_gui(seats, film_name, film_time, callback):
     #0=free, 1=busy|book, 2=selected 
     colors = ['royalblue', 'grey', 'light sea green']
     selected_seats = []
@@ -32,28 +32,22 @@ def create_gui(seats, film_name, callback):
     root = Tk()
     root.protocol("WM_DELETE_WINDOW", on_closing)
     root.title('CHAPLIN')
-    root.geometry('745x525')
+    root.geometry('765x435')
     root.resizable(width=False, height=False)
     root.tk.call('wm', 'iconphoto', root._w, PhotoImage(file='c2.png'))
     frame = Frame(bg='black')
 
-    chap1 = PhotoImage(file="ico.png")
-    Label(root, image=chap1).grid(row=0, column=0, columnspan=4)
-    chap2 = PhotoImage(file="ico.png")
-    Label(root, image=chap2).grid(row=0, column=2, columnspan=4)
-    chap3 = PhotoImage(file="ico.png")
-    Label(root, image=chap3).grid(row=0, column=4, columnspan=4)
+    #chap1 = PhotoImage(file="ico.png")
+    #Label(root, image=chap1).grid(row=0, column=2, columnspan=4)
 
     buttonBuy = Button(root, text="Buy", background=colors[2], foreground="white")
-    buttonBuy.grid(row=0,column=6,columnspan=2,ipadx=10,padx=3,pady=5,sticky=E)
+    buttonBuy.grid(row=0,column=1,columnspan=5,ipadx=150,padx=3,pady=5,sticky=E)
     buttonBuy.is_book = False
     buttonBuy.bind("<ButtonRelease-1>", process_order_click)
     buttonBook = Button(root, text="Book", background=colors[0], foreground="white")
-    buttonBook.grid(row=0,column=7,columnspan=2,ipadx=10,padx=3,pady=5,sticky=E)
+    buttonBook.grid(row=0,column=6,columnspan=5,ipadx=150,padx=3,pady=5,sticky=E)
     buttonBook.is_book = True
     buttonBook.bind("<ButtonRelease-1>", process_order_click)
-    Button(root, text="Мне повезет!", background="coral",
-        foreground="white").grid(row=0,column=9,columnspan=2,ipadx=10,padx=3,pady=5,sticky=E)
 
     for i in range(5, 15):
         label1 = Label(root, text = "ряд "+str(15 - i)).grid(row = i, column = 0)
@@ -67,7 +61,7 @@ def create_gui(seats, film_name, callback):
             but2.seat_index = index
             but2.bind("<Button-1>", process_seat_click)
 
-    but = Button(root, text = film_name,  bg="indigo", foreground="white",)
+    but = Button(root, text = film_name + " в " + film_time,  bg="indigo", foreground="white",)
     but.grid(columnspan = 16, padx = 18, ipady = 5, pady = 15, sticky = W+E)
     but.bind("<Button-1>", lambda e: None)
 
